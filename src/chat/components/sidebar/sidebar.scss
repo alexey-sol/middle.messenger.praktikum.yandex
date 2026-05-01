@@ -1,0 +1,119 @@
+@use "@/styles/constants" as *;
+
+.sidebar {
+    width: 310px;
+    background: #FBFBFB;
+    border-right: 1px solid $border-color;
+    display: flex;
+    flex-direction: column;
+
+    &__header {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 16px 10px;
+        text-align: right;
+    }
+
+    &__profile-link {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        gap: 6px;
+        color: #999;
+        text-decoration: none;
+        font-size: 12px;
+    }
+
+    &__search {
+        padding: 8px;
+        border: none;
+        border-radius: 5px;
+        background: #EFEFEF;
+        text-align: center;
+        font-size: 12px;
+    }
+
+    &__chat-list {
+        margin: 0;
+        padding: 0;
+        overflow-y: auto;
+    }
+}
+
+.chat-item {
+    height: 70px;
+    padding: 0 12px;
+    transition: background-color 100ms;
+    cursor: pointer;
+
+    &--active {
+        background: $secondary-color;
+    }
+
+    &:hover {
+        background: $secondary-color;
+    }
+
+    &__wrapper {
+        display: flex;
+        gap: 10px;
+        padding: 10px 0;
+        border-top: 1px solid $border-color;
+    }
+
+    &__avatar {
+        width: 47px;
+        height: 47px;
+        border-radius: 50%;
+        background: #EFEFEF;
+        flex-shrink: 0;
+    }
+
+    &__content {
+        flex-grow: 1;
+        overflow: hidden;
+    }
+
+    &__row {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__name {
+        font-weight: 600;
+        font-size: 13px;
+    }
+
+    &__time {
+        font-size: 9px;
+        color: #999;
+    }
+
+    &__last-message {
+      font-size: 12px;
+      color: #999;
+      margin: 0;
+      line-height: 15px;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+    }
+
+    &__outgoing {
+        font-weight: 600;
+    }
+
+    &__badge {
+        background: $primary-color;
+        color: white;
+        border-radius: 50%;
+        min-width: 20px;
+        height: 20px;
+        font-size: 11px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

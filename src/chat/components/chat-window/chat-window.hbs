@@ -1,0 +1,70 @@
+<section class="chat-window">
+    <header class="chat-header">
+        <div class="chat-header__wrapper">
+            <div class="chat-header__info">
+                <div class="chat-header__avatar"></div>
+                <span class="chat-header__name">{{activeChat.title}}</span>
+            </div>
+
+            <div class="chat-settings">
+                <button class="chat-settings__btn">
+                    <img src="/src/assets/icons/settings.svg" alt="Settings">
+                </button>
+
+                {{> dropdown class="chat-settings__dropdown" items=settingsDropdownItems}}
+            </div>
+        </div>
+    </header>
+
+    <div class="chat-feed">
+        {{#each activeChat.messages}}
+            {{#if (isFirstDateOccurrence this ../activeChat.messages)}}
+                <p class="chat-feed__message-date">{{formatChatMessageDate this.date}}</p>
+            {{/if}}
+
+            <div class="message message--{{#if this.isOutgoing}}outgoing{{else}}incoming{{/if}}">
+                {{#if this.message}}
+                    <div>
+                        {{{sanitize this.message}}}
+                    </div>
+                {{/if}}
+
+                {{#if this.images}}
+                    <div class="message__attached-images">
+                        {{#each this.images}}
+                            <img width="300" src="{{this.url}}" alt="{{this.title}}">
+                        {{/each}}
+                    </div>
+                {{/if}}
+
+                <div class="message__meta">
+                    {{#if this.isChecked}}
+                        <img src="/src/assets/icons/checked.svg" alt="Checked">
+                    {{/if}}
+
+                    <span class="message__time {{#if this.isOutgoing}}message__time--outgoing{{/if}}">
+                        {{formatTime this.date}}
+                    </span>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+
+    <footer class="chat-footer">
+        <div class="chat-footer__wrapper">
+            <div class="chat-attach">
+                <button class="chat-attach__btn">
+                    <img src="/src/assets/icons/attach.svg" alt="Attach file">
+                </button>
+
+                {{> dropdown class="chat-attach__dropdown" items=attachDropdownItems}}
+            </div>
+
+            <input type="text" class="chat-footer__input" placeholder="Сообщение">
+
+            <button class="chat-footer__send-btn">
+                <img src="/src/assets/icons/send.svg" alt="Send message">
+            </button>
+        </div>
+    </footer>
+</section>

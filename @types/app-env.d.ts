@@ -1,6 +1,10 @@
 declare module "*.css";
 
+declare module "*.scss";
+
 declare module "*.module.scss";
+
+declare module "*.hbs?raw";
 
 declare module "*.svg" {
     const svg: string;
