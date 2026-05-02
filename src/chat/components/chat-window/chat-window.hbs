@@ -8,7 +8,7 @@
 
             <div class="chat-settings">
                 <button class="chat-settings__btn">
-                    <img src="/src/assets/icons/settings.svg" alt="Settings">
+                    <img src="/assets/icons/settings.svg" alt="Settings">
                 </button>
 
                 {{> dropdown class="chat-settings__dropdown" items=settingsDropdownItems}}
@@ -39,7 +39,7 @@
 
                 <div class="message__meta">
                     {{#if this.isChecked}}
-                        <img src="/src/assets/icons/checked.svg" alt="Checked">
+                        <img src="/assets/icons/checked.svg" alt="Checked">
                     {{/if}}
 
                     <span class="message__time {{#if this.isOutgoing}}message__time--outgoing{{/if}}">
@@ -54,7 +54,7 @@
         <div class="chat-footer__wrapper">
             <div class="chat-attach">
                 <button class="chat-attach__btn">
-                    <img src="/src/assets/icons/attach.svg" alt="Attach file">
+                    <img src="/assets/icons/attach.svg" alt="Attach file">
                 </button>
 
                 {{> dropdown class="chat-attach__dropdown" items=attachDropdownItems}}
@@ -63,7 +63,7 @@
             <input type="text" class="chat-footer__input" placeholder="Сообщение">
 
             <button class="chat-footer__send-btn">
-                <img src="/src/assets/icons/send.svg" alt="Send message">
+                <img src="/assets/icons/send.svg" alt="Send message">
             </button>
         </div>
     </footer>

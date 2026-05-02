@@ -1,0 +1,19 @@
+@use "@/styles/global" as *;
+@use "@/styles/constants" as *;
+@use "../components/profile/profile.scss" as *;
+@use "../components/profile-sidebar/profile-sidebar.scss" as *;
+@use "../components/profile-links/profile-links.scss" as *;
+
+.profile-layout {
+    display: flex;
+    height: 100vh;
+    font-family: sans-serif;
+}
+
+.profile-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+    margin-top: 50px;
+}

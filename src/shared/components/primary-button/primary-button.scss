@@ -1,0 +1,16 @@
+@use "@/styles/constants" as *;
+
+.primary-button {
+    width: 280px;
+    padding: 10px;
+    background: $primary-color;
+    color: $white-color;
+    border: none;
+    border-radius: 8px;
+    transition: filter 100ms;
+    cursor: pointer;
+
+    &:not(:disabled):hover {
+        filter: brightness(0.9);
+    }
+}

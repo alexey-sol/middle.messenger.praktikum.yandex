@@ -1,0 +1,31 @@
+@use "@/styles/constants" as *;
+
+.profile-sidebar {
+    width: 64px;
+    background: #FBFBFB;
+    border-right: 1px solid $border-color;
+
+    &__back-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        text-decoration: none;
+        transition: background 0.2s;
+
+        &:hover {
+            background: #F2F2F2;
+        }
+    }
+
+    &__icon-wrapper {
+        width: 28px;
+        height: 28px;
+        background: $primary-color;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

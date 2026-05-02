@@ -1,0 +1,26 @@
+<div class="profile-rows">
+    <div class="profile-header">
+        <label class="profile-avatar" for="avatar-upload">
+            <img src="/assets/icons/default-avatar.svg" alt="{{displayName}}" id="avatar-preview">
+        </label>
+
+        <h1 class="profile-header__name">{{displayName}}</h1>
+
+        <input type="file" id="avatar-upload" name="avatar" accept="image/*" style="display: none;">
+    </div>
+
+    <form class="profile-form">
+        {{#each fields}}
+            <div class="profile-form__row">
+                <label class="profile-form__label">{{this.label}}</label>
+                <input
+                    type="{{this.type}}"
+                    name="{{this.name}}"
+                    class="profile-form__input"
+                    value="{{this.value}}"
+                    {{#if this.disabled}}disabled{{/if}}
+                >
+            </div>
+        {{/each}}
+    </form>
+</div>

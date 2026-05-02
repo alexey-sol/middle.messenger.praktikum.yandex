@@ -14,7 +14,7 @@
         "lint": "eslint .",
         "lint:fix": "npm run lint -- --fix",
         "lint:pre-commit": "npm run lint:fix",
-        "stylelint": "stylelint \"**/*.{css,scss}\"",
+        "stylelint": "stylelint \"src/**/*.{css,scss}\"",
         "stylelint:fix": "npm run stylelint -- --fix",
         "stylelint:pre-commit": "npm run stylelint:fix",
         "pre-commit": "lint-staged",

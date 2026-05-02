@@ -1,0 +1,25 @@
+@use "@/styles/constants" as *;
+
+.profile-links {
+    width: 100%;
+    max-width: $profile-max-width;
+
+    &__row {
+        padding: 6px 0;
+        border-bottom: 1px solid $border-color;
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    &__link {
+        text-decoration: none;
+        font-size: 13px;
+        color: #3369F3;
+
+        &--danger {
+            color: $danger-color;
+        }
+    }
+}

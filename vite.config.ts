@@ -9,6 +9,9 @@ export default defineConfig({
             input: {
                 main: resolve(__dirname, 'index.html'),
                 chat: resolve(__dirname, 'src', 'chat', 'views', 'chat.html'),
+                "profile-main": resolve(__dirname, 'src', 'profile', 'views', 'profile-main.html'),
+                "profile-edit": resolve(__dirname, 'src', 'profile', 'views', 'profile-edit.html'),
+                "password-edit": resolve(__dirname, 'src', 'profile', 'views', 'password-edit.html'),
             },
         },
     },
