@@ -1,2 +1,1 @@
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-document.querySelector<HTMLDivElement>("#app")!.innerHTML = "main";
+import "@/chat/views/chat";

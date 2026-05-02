@@ -30,7 +30,7 @@ export const PROFILE_FIELDS = {
         name: "second_name",
         type: "text",
     },
-};
+} as const;
 
 export const PASSWORD_FIELDS = {
     old_password: {
@@ -48,4 +48,4 @@ export const PASSWORD_FIELDS = {
         name: "confirm_password",
         type: "password",
     },
-};
+} as const;
