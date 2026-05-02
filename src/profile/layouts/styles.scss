@@ -1,6 +1,6 @@
-@use "@/styles/global" as *;
 @use "@/styles/constants" as *;
 @use "@/shared/components/button/button.scss" as *;
+@use "@/shared/layouts/app.scss" as *;
 @use "../components/profile/profile.scss" as *;
 @use "../components/profile-sidebar/profile-sidebar.scss" as *;
 @use "../components/profile-links/profile-links.scss" as *;

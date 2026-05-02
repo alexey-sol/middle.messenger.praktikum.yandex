@@ -1,8 +1,8 @@
-@use "@/styles/global" as *;
 @use "@/styles/constants" as *;
+@use "@/shared/layouts/app.scss" as *;
 @use "@/shared/components/dropdown/dropdown.scss" as *;
-@use "../../components/sidebar/sidebar.scss" as *;
-@use "../../components/chat-window/chat-window.scss" as *;
+@use "../components/sidebar/sidebar.scss" as *;
+@use "../components/chat-window/chat-window.scss" as *;
 
 .chat {
     display: flex;
