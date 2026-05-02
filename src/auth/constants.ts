@@ -48,10 +48,12 @@ export const SIGN_IN_FIELDS = {
         label: "Логин",
         name: "login",
         type: "text",
+        required: true,
     },
     password: {
         label: "Пароль",
         name: "password",
         type: "password",
+        required: true,
     },
 } as const;

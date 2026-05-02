@@ -1,5 +1,5 @@
-@use "@/styles/global" as *;
 @use "@/styles/constants" as *;
+@use "@/shared/layouts/app.scss" as *;
 @use "@/shared/components/button/button.scss" as *;
 
 .error-layout {

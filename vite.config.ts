@@ -1,6 +1,9 @@
+import { globSync } from "fs";
 import { resolve } from "path";
 import { defineConfig } from "vite";
 import handlebars from "vite-plugin-handlebars";
+
+const PARTIAL_DIRECTORIES = globSync('src/**/shared/layouts')
 
 export default defineConfig({
     appType: 'mpa',
@@ -26,7 +29,9 @@ export default defineConfig({
     },
     assetsInclude: ['**/*.hbs'],
     plugins: [
-        handlebars(),
+        handlebars({
+            partialDirectory: PARTIAL_DIRECTORIES,
+        }),
     ],
     resolve: {
         alias: {
