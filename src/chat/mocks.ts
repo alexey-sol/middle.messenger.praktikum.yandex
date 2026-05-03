@@ -93,7 +93,7 @@ export const ACTIVE_CHAT_MOCK: ActiveChat = {
             date: "2026-04-20T11:25:10.000Z",
             id: "1",
             message:
-                "<p>I don't want to live on this planet anymore. I got ants in my butt, and I needs to strut. I don't have emotions & sometimes that makes me very sad. Excuse my language but I have had it with you ruffling my petticoats! I'm so embarrassed. I wish everybody else was dead. Shut up and take my money!</p><p>Dammit Kif, where's the little umbrella? That's what makes it a scotch on the rocks! Ugh, it's like a party in my mouth & everyone's throwing up. Well, if jacking on will make strangers think I'm cool, I'll do it Ugh, it's like a party in my mouth & everyone's throwing up.</p>",
+                "<p>I don't want to live on this planet anymore. I got ants in my butt, and I needs to strut. I don't have emotions & sometimes that makes me very sad. Excuse my language but I have had it with you ruffling my petticoats! I'm so embarrassed. I wish everybody else was dead. Shut up and take my money!</p><p>Dammit Kif, where's the little umbrella? That's what makes it a scotch on the rocks! Ugh, it's like a party in my mouth & everyone's throwing up. Well, if jacking on will make strangers think I'm cool, I'll do it Ugh, it's like a party in my mouth & everyone's throwing up. <script>alert('Boo')</script></p>",
         },
         {
             date: "2026-04-21T11:25:10.000Z",

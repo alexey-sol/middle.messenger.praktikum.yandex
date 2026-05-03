@@ -9,13 +9,13 @@
     cursor: pointer;
 
     &--primary {
-        background: $primary-color;
-        color: $white-color;
+        background: $color-primary;
+        color: $color-white;
     }
 
     &--secondary {
         background: none;
-        color: $primary-color;
+        color: $color-primary;
     }
 
     &:not(:disabled):hover {

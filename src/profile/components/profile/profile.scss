@@ -1,6 +1,6 @@
 @use "@/styles/constants" as *;
 
-.profile-rows {
+.profile-content {
     width: 100%;
     max-width: $profile-max-width;
     display: flex;
@@ -25,7 +25,7 @@
     align-items: center;
     width: 130px;
     height: 130px;
-    background: #EFEFEF;
+    background: $color-input-bg;
     border-radius: 50%;
     border: none;
     padding: 0;
@@ -34,12 +34,16 @@
     transition: filter 100ms;
     cursor: pointer;
 
+    &__input {
+        display: none;
+    }
+
     &:hover {
         filter: brightness(0.6);
     }
 }
 
-.profile-form {
+.profile-rows {
     width: 100%;
     margin-bottom: 40px;
 
@@ -48,7 +52,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 6px 0;
-        border-bottom: 1px solid $border-color;
+        border-bottom: 1px solid $color-border;
 
         &--last {
             border-bottom: none;
@@ -64,7 +68,7 @@
         text-align: right;
         border: none;
         background: none;
-        color: #999;
+        color: $color-text-light;
         font-size: 13px;
         width: 60%;
 

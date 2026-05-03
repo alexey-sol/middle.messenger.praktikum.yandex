@@ -2,8 +2,8 @@
 
 .sidebar {
     width: 310px;
-    background: #FBFBFB;
-    border-right: 1px solid $border-color;
+    background: $color-sidebar-bg;
+    border-right: 1px solid $color-border;
     display: flex;
     flex-direction: column;
 
@@ -20,7 +20,7 @@
         align-items: center;
         justify-content: end;
         gap: 6px;
-        color: #999;
+        color: $color-text-light;
         text-decoration: none;
         font-size: 12px;
     }
@@ -29,7 +29,7 @@
         padding: 8px;
         border: none;
         border-radius: 5px;
-        background: #EFEFEF;
+        background: $color-input-bg;
         text-align: center;
         font-size: 12px;
     }
@@ -48,25 +48,25 @@
     cursor: pointer;
 
     &--active {
-        background: $secondary-color;
+        background: $color-secondary;
     }
 
     &:hover {
-        background: $secondary-color;
+        background: $color-secondary;
     }
 
     &__wrapper {
         display: flex;
         gap: 10px;
         padding: 10px 0;
-        border-top: 1px solid $border-color;
+        border-top: 1px solid $color-border;
     }
 
     &__avatar {
         width: 47px;
         height: 47px;
         border-radius: 50%;
-        background: #EFEFEF;
+        background: $color-input-bg;
         flex-shrink: 0;
     }
 
@@ -87,12 +87,12 @@
 
     &__time {
         font-size: 9px;
-        color: #999;
+        color: $color-text-light;
     }
 
     &__last-message {
       font-size: 12px;
-      color: #999;
+      color: $color-text-light;
       margin: 0;
       line-height: 15px;
       display: -webkit-box;
@@ -106,7 +106,7 @@
     }
 
     &__badge {
-        background: $primary-color;
+        background: $color-primary;
         color: white;
         border-radius: 50%;
         min-width: 20px;

@@ -2,8 +2,8 @@
 
 .profile-sidebar {
     width: 64px;
-    background: #FBFBFB;
-    border-right: 1px solid $border-color;
+    background: $color-sidebar-bg;
+    border-right: 1px solid $color-border;
 
     &__back-btn {
         display: flex;
@@ -22,7 +22,7 @@
     &__icon-wrapper {
         width: 28px;
         height: 28px;
-        background: $primary-color;
+        background: $color-primary;
         border-radius: 50%;
         display: flex;
         justify-content: center;

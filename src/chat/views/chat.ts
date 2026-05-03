@@ -14,6 +14,10 @@ Handlebars.registerPartial("sidebar", sidebar);
 Handlebars.registerPartial("chat-window", chatWindow);
 Handlebars.registerPartial("dropdown", dropdown);
 
+Handlebars.registerHelper("safeRender", (dirtyHtml) => {
+    const cleanHtml = sanitize(dirtyHtml);
+    return new Handlebars.SafeString(cleanHtml);
+});
 Handlebars.registerHelper("sanitize", sanitize);
 Handlebars.registerHelper("formatTime", formatTime);
 Handlebars.registerHelper("formatChatItemDate", formatChatItemDate);

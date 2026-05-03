@@ -4,9 +4,15 @@
     width: 100%;
     max-width: $profile-max-width;
 
-    &__row {
+    &__list {
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+    }
+
+    &__item {
         padding: 6px 0;
-        border-bottom: 1px solid $border-color;
+        border-bottom: 1px solid $color-border;
 
         &:last-child {
             border-bottom: none;
@@ -16,10 +22,10 @@
     &__link {
         text-decoration: none;
         font-size: 13px;
-        color: #3369F3;
+        color: $color-primary;
 
         &--danger {
-            color: $danger-color;
+            color: $color-danger;
         }
     }
 }

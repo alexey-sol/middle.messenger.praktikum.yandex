@@ -8,9 +8,10 @@
         "node": ">=24.0.0 <25.0.0"
     },
     "scripts": {
-        "start": "vite --config vite.config.ts",
+        "start": "npm run build && npm run preview",
+        "dev": "vite --config vite.config.ts",
         "build": "tsc && vite build --config vite.config.ts",
-        "preview": "vite preview",
+        "preview": "vite preview --port 3000",
         "lint": "eslint .",
         "lint:fix": "npm run lint -- --fix",
         "lint:pre-commit": "npm run lint:fix",

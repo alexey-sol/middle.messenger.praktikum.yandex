@@ -10,7 +10,27 @@ export const insertHtml = (html: string, elementId = APP_ELEMENT_ID) => {
     element.insertAdjacentHTML("beforeend", html);
 };
 
-// TODO implement
-export const sanitize = (string: string) => {
-    return string;
+const ALLOWED_TAGS = ["P", "B", "I", "EM", "STRONG", "BR", "SPAN", "DIV"];
+
+export const sanitize = (html: string) => {
+    const parser = new DOMParser();
+    const document = parser.parseFromString(html, "text/html");
+    const allElements = document.body.querySelectorAll("*");
+
+    allElements.forEach((element) => {
+        if (!ALLOWED_TAGS.includes(element.tagName)) {
+            element.replaceWith(...Array.from(element.childNodes));
+            return;
+        }
+
+        while (element.attributes.length > 0) {
+            element.removeAttribute(element.attributes[0].name);
+        }
+    });
+
+    return document.body.innerHTML;
+};
+
+export const navigate = (path: string) => {
+    window.location.href = path;
 };

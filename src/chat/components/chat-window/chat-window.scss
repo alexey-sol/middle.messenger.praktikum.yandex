@@ -14,7 +14,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 10px 0;
-        border-bottom: 1px solid $border-color;
+        border-bottom: 1px solid $color-border;
     }
 
     &__info {
@@ -26,7 +26,7 @@
         width: 34px;
         height: 34px;
         border-radius: 50%;
-        background: #EFEFEF;
+        background: $color-input-bg;
         margin-right: 10px;
     }
 
@@ -45,9 +45,9 @@
         height: 25px;
         border: none;
         padding: 0;
-        background: #EFEFEF;
+        background: $color-input-bg;
         border-radius: 100%;
-        color: $primary-color;
+        color: $color-primary;
     }
     
     &:hover &__dropdown {
@@ -63,7 +63,7 @@
 .chat-feed {
     flex-grow: 1;
     padding: 20px;
-    background: $white-color;
+    background: $color-white;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -92,7 +92,7 @@
     }
 
     &--outgoing {
-        background: $secondary-color;
+        background: $color-secondary;
         align-self: flex-end;
     }
 
@@ -121,7 +121,7 @@
         font-size: 9px;
 
         &--outgoing {
-            color: $primary-color;
+            color: $color-primary;
         }
     }
 
@@ -139,18 +139,18 @@
 .chat-footer {
     padding: 0 12px;
 
-    &__wrapper {
+    &__form {
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 6px;
         padding: 10px 0;
-        border-top: 1px solid $border-color;
+        border-top: 1px solid $color-border;
     }
 
     &__input {
         flex-grow: 1;
-        background: #EFEFEF;
+        background: $color-input-bg;
         border: none;
         border-radius: 30px;
         padding: 10px 20px;
@@ -162,7 +162,7 @@
         background: none;
         border: none;
         padding: 0;
-        color: $primary-color;
+        color: $color-primary;
     }
 }
 
@@ -174,7 +174,7 @@
         background: none;
         border: none;
         padding: 0;
-        color: $primary-color;
+        color: $color-primary;
     }
     
     &:hover &__dropdown {

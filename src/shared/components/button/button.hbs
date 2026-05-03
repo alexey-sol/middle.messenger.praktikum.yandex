@@ -1,5 +1,7 @@
-<a href="{{url}}">
-    <button class="button button--{{theme}}" type="{{type}}">
-        {{title}}
-    </button>
-</a>
+<button
+    class="button button--{{theme}}"
+    type="{{type}}"
+    {{#if to}}data-to="{{to}}"{{/if}}
+>
+    {{title}}
+</button>

@@ -7,7 +7,7 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: $white-color;
+    background: $color-white;
 }
 
 .auth-card {
@@ -51,12 +51,12 @@
 
     &__label {
         font-size: 9px;
-        color: #999;
+        color: $color-text-light;
     }
 
     &__field {
         border: none;
-        border-bottom: 1px solid $primary-color;
+        border-bottom: 1px solid $color-primary;
         padding-bottom: 5px;
         font-size: 13px;
         outline: none;

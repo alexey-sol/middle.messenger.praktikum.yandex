@@ -1,10 +1,13 @@
 import rawTemplate from "../layouts/error.hbs?raw";
 import button from "@/shared/components/button/button.hbs?raw";
+import { handleClickNavigate } from "@/shared/utils/handlers";
 import { insertHtml } from "@/shared/utils/helpers";
-import Handlebars from "handlebars";
 import "../layouts/styles.scss";
+import Handlebars from "handlebars";
 
 Handlebars.registerPartial("button", button);
+
+document.addEventListener("click", handleClickNavigate);
 
 const template = Handlebars.compile(rawTemplate);
 
