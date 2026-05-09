@@ -1,0 +1,29 @@
+<main class="auth-layout">
+    <div class="auth-card">
+        <h1 class="auth-card__title">{{title}}</h1>
+
+        <form class="auth-form" action="{{action}}">
+            <div class="auth-form__rows">
+                {{#each fields}}
+                    <div class="form-input">
+                        <label class="form-input__label" for="{{this.name}}">
+                            {{this.label}}
+                        </label>
+
+                        <input
+                            class="form-input__field"
+                            type="{{this.type}}"
+                            name="{{this.name}}"
+                            id="{{this.name}}"
+                            {{#if this.required}}required{{/if}}
+                        >
+                    </div>
+                {{/each}}
+            </div>
+
+            <div class="auth-form__actions">
+                {{> @partial-block }}
+            </div>
+        </form>
+    </div>
+</main>

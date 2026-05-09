@@ -1,0 +1,38 @@
+<aside class="sidebar">
+    <div class="sidebar__header">
+        <a href="/src/profile/views/profile-main" class="sidebar__profile-link">
+          Профиль <img src="/assets/icons/chevron-right.svg" alt="Arrow">
+        </a>
+
+        <input name="message" type="text" class="sidebar__search" placeholder="Поиск">
+    </div>
+
+    <ul class="sidebar__chat-list">
+        {{#each chatItems}}
+            <li class="chat-item {{#if this.isActive}}chat-item--active{{/if}}">
+            <div class="chat-item__wrapper">
+                <div class="chat-item__avatar"></div>
+                    <div class="chat-item__content">
+                        <div class="chat-item__row">
+                            <span class="chat-item__name">{{this.title}}</span>
+                            <span class="chat-item__time">{{formatChatItemDate this.date}}</span>
+                        </div>
+                        <div class="chat-item__row">
+                            <p class="chat-item__last-message">
+                                {{#if this.isOutgoing}}
+                                    <span class="chat-item__outgoing">Вы:</span>
+                                {{/if}}
+
+                                {{this.lastMessage}}
+                            </p>
+
+                            {{#if this.unreadCount}}
+                                <div class="chat-item__badge">{{this.unreadCount}}</div>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+            </li>
+        {{/each}}
+    </ul>
+</aside>
