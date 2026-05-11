@@ -1,13 +1,13 @@
 import { APP_ELEMENT_ID } from "../constants";
 
-export const insertHtml = (html: string, elementId = APP_ELEMENT_ID) => {
-    const element = document.querySelector<HTMLDivElement>(elementId);
+export const insertElement = (element: Element, parentElementId = APP_ELEMENT_ID) => {
+    const parentElement = document.querySelector<HTMLDivElement>(parentElementId);
 
-    if (!element) {
-        throw new Error(`Element with id = ${elementId} not found`);
+    if (!parentElement) {
+        throw new Error(`Element with id = ${parentElementId} not found`);
     }
 
-    element.insertAdjacentHTML("beforeend", html);
+    parentElement.append(element);
 };
 
 const ALLOWED_TAGS = ["P", "B", "I", "EM", "STRONG", "BR", "SPAN", "DIV"];

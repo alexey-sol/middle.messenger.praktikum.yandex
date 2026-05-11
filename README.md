@@ -14,13 +14,13 @@
 - Демо: https://jade-mooncake-3cd203.netlify.app/
 
 Страницы:
-- `/src/chat/views/chat` (или рут, без пути) - мессенджер
-- `/src/profile/views/profile-main` - профиль
-- `/src/profile/views/profile-edit` - изменение профиля
-- `/src/profile/views/password-edit` - изменение пароля
-- `/src/auth/views/sign-in` - логин
-- `/src/error/views/404` - ошибка 404
-- `/src/error/views/500` - ошибка 500
+- `/src/chat/views/pages/chat` (или рут, без пути) - мессенджер
+- `/src/profile/views/pages/profile-main` - профиль
+- `/src/profile/views/pages/profile-edit` - изменение профиля
+- `/src/profile/views/pages/password-edit` - изменение пароля
+- `/src/auth/views/pages/sign-in` - логин
+- `/src/error/views/pages/404` - ошибка 404
+- `/src/error/views/pages/500` - ошибка 500
 
 ## Реализация - спринт 1
 

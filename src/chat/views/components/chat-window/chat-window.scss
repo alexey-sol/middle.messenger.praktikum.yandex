@@ -1,0 +1,82 @@
+@use "@/styles/constants" as *;
+
+.chat-window {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    padding: 0 12px;
+
+    &__wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid $color-border;
+    }
+
+    &__info {
+        display: flex;
+        align-items: center;
+    }
+
+    &__avatar {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: $color-input-bg;
+        margin-right: 10px;
+    }
+
+    &__name {
+        font-weight: 600;
+        font-size: 13px;
+    }
+}
+
+.chat-settings {
+    position: relative;
+
+    &__btn {
+        display: flex;
+        width: 25px;
+        height: 25px;
+        border: none;
+        padding: 0;
+        background: $color-input-bg;
+        border-radius: 100%;
+        color: $color-primary;
+    }
+    
+    &:hover &__dropdown {
+        display: flex;
+    }
+
+    &__dropdown {
+        right: 0;
+        top: 25px;
+    }
+}
+
+.chat-feed {
+    flex-grow: 1;
+    padding: 20px;
+    background: $color-white;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+
+    &__message-date {
+        display: flex;
+        justify-content: center;
+        margin: 0;
+        font-size: 12px;
+    }
+}
+
+.chat-footer {
+    padding: 0 12px;
+}

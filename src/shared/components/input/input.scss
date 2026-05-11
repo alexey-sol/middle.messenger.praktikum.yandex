@@ -1,0 +1,45 @@
+@use "@/styles/constants" as *;
+
+.input {
+    $root: &;
+
+    display: flex;
+    flex-direction: column;
+    padding: 6px 0;
+    border-bottom: 1px solid $color-primary;
+
+    &__label {
+        font-size: 9px;
+        color: $color-text-light;
+    }
+
+    &__field {
+        border: none;
+        padding: 0;
+        background: none;
+        outline: none;
+
+        &:disabled {
+            cursor: default;
+        }
+    }
+
+    &--inline-variant {
+        flex-direction: row;
+        justify-content: space-between;
+        border-color: $color-border;
+
+        &:last-of-type {
+            border-bottom: none;
+        }
+
+        #{$root}__label {
+            font-size: 13px;
+            color: $color-text-darkest;
+        }
+
+        #{$root}__field {
+            text-align: end;
+        }
+    }
+}
