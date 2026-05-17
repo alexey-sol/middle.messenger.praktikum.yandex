@@ -1,0 +1,22 @@
+@use "@/styles/constants" as *;
+
+.input {
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__label {
+        font-size: 9px;
+        color: $color-text-light;
+    }
+
+    &__field {
+        border: none;
+        padding: 0;
+        background: none;
+        outline: none;
+        padding-bottom: 6px;
+        border-bottom: 1px solid $color-primary;
+    }
+}

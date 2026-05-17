@@ -1,4 +1,4 @@
-{{#> auth action="/src/chat/views/pages/chat" }}
-    {{{ Button theme="primary" title="Авторизоваться" type="submit" }}}
+{{#> auth }}
+    {{{ Button theme="primary" title="Авторизоваться" type="submit" form="auth-form" }}}
     {{{ Button theme="secondary" title="Нет аккаунта?" type="button" to="/src/auth/views/pages/sign-up" }}}
 {{/auth}}

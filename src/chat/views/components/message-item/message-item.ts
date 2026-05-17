@@ -14,6 +14,8 @@ Handlebars.registerHelper("safeRender", (dirtyHtml) => {
 Handlebars.registerHelper("formatTime", formatTime);
 
 export class MessageItem extends Block<MessageItemProps> {
+    static componentName = "MessageItem";
+
     protected override template = messageItemTemplate;
 }
 

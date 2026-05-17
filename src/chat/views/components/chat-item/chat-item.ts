@@ -9,6 +9,8 @@ import Handlebars from "handlebars";
 Handlebars.registerHelper("formatChatItemDate", formatChatItemDate);
 
 export class ChatItem extends Block<ChatItemProps> {
+    static componentName = "ChatItem";
+
     protected override template = chatItemTemplate;
 }
 

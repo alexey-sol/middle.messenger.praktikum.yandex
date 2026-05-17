@@ -1,3 +1,4 @@
+import { type InputProps } from "../components/input/types";
 import { APP_ELEMENT_ID } from "../constants";
 
 export const insertElement = (element: Element, parentElementId = APP_ELEMENT_ID) => {
@@ -33,4 +34,26 @@ export const sanitize = (html: string) => {
 
 export const navigate = (path: string) => {
     window.location.href = path;
+};
+
+// TODO удалить, когда будет API
+export const logFormValues = (event: SubmitEvent, fields: InputProps[]) => {
+    const form = event.currentTarget;
+
+    if (!(form instanceof HTMLFormElement)) {
+        return;
+    }
+
+    const values = fields.reduce<Record<string, unknown>>((acc, { name = "" }) => {
+        const input = form.elements.namedItem(name);
+
+        if (input instanceof HTMLInputElement) {
+            acc[name] = input.value;
+        }
+
+        return acc;
+    }, {});
+
+    // eslint-disable-next-line no-console
+    console.log(values);
 };

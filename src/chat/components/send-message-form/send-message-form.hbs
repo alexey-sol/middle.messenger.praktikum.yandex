@@ -1,4 +1,4 @@
-<form class="send-message-form" action="/src/error/views/pages/500">
+<form class="send-message-form" novalidate>
     <div class="chat-attach">
         <button class="chat-attach__btn">
             <img src="/assets/icons/attach.svg" alt="Attach file">
@@ -7,7 +7,14 @@
         {{> dropdown class="chat-attach__dropdown" items=attachDropdownItems }}
     </div>
 
-    <input name="message" type="text" class="send-message-form__input" placeholder="Сообщение" required>
+    {{#each fields}}
+        <input
+            class="send-message-form__input"
+            name={{this.name}}
+            placeholder={{this.placeholder}}
+            type={{this.type}}
+        />
+    {{/each}}
 
     <button class="send-message-form__send-btn" type="submit">
         <img src="/assets/icons/send.svg" alt="Send message">

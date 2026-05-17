@@ -1,15 +1,20 @@
-<div class="input {{#if variant}}input--{{variant}}-variant{{/if}}">
-    <label class="input__label {{#if value}}input__label--shrink{{/if}}">
-        {{label}}
-    </label>
+<div class="input" data-component>
+    <div class="input__wrapper">
+        <label class="input__label">
+            {{label}}
+        </label>
 
-    <input
-        class="input__field"
-        id="{{name}}"
-        name="{{name}}"
-        type="{{type}}"
-        value="{{value}}"
-        {{#if disabled}}disabled{{/if}}
-        {{#if required}}required{{/if}}
-    >
+        <input
+            class="input__field"
+            id="{{name}}"
+            name="{{name}}"
+            placeholder="{{placeholder}}"
+            type="{{type}}"
+            value="{{value}}"
+            {{#if disabled}}disabled{{/if}}
+            {{#if ref}}ref="{{ref}}"{{/if}}
+        >
+    </div>
+
+    <p class="input__error-message" data-error>{{error}}</p>
 </div>

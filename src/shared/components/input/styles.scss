@@ -1,0 +1,27 @@
+@use "@/styles/constants" as *;
+
+.input {
+    &__field:disabled {
+        cursor: default;
+    }
+
+    // [1]
+    &__field:user-invalid {
+        color: $color-danger;
+    }
+
+    &__error-message {
+        color: $color-danger;
+        font-size: 12px;
+        margin: 0;
+        margin-top: 4px;
+        display: none;
+    }
+
+    &:has(&__field:user-invalid) &__error-message {
+        display: block;
+    }
+}
+
+// [1]. Старый :invalid псевдокласс включается, даже когда встроенная валидация формы отключена через novalidate.
+// Новый :user-invalid ждет "отмашки".

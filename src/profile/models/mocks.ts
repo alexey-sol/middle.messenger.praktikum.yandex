@@ -3,28 +3,28 @@ import { type InputProps } from "@/shared/components/input/types";
 
 export const PROFILE_FIELDS_MOCK: InputProps[] = [
     {
-        ...PROFILE_FIELDS.email,
+        ...PROFILE_FIELDS[0],
         value: "pochta@yandex.ru",
     },
     {
-        ...PROFILE_FIELDS.login,
+        ...PROFILE_FIELDS[1],
         value: "alexius",
     },
     {
-        ...PROFILE_FIELDS.first_name,
+        ...PROFILE_FIELDS[2],
         value: "Алексей",
     },
     {
-        ...PROFILE_FIELDS.second_name,
+        ...PROFILE_FIELDS[3],
         value: "Забыл",
     },
     {
-        ...PROFILE_FIELDS.display_name,
+        ...PROFILE_FIELDS[4],
         value: "Алексей",
     },
     {
-        ...PROFILE_FIELDS.phone,
-        value: "+7 (123) 456 78 90",
+        ...PROFILE_FIELDS[5],
+        value: "+71234567890",
     },
 ] as const;
 

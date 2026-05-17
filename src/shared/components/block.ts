@@ -8,12 +8,19 @@ export type BlockOwnProps = Object & {
     __refs?: Record<string, Element>;
 };
 
-type EventListType = Partial<Record<keyof HTMLElementEventMap, (e: Event) => void>>;
+export type MapEventNameToListenerArgs = Partial<{
+    [K in keyof HTMLElementEventMap]: {
+        listener: (event: HTMLElementEventMap[K]) => void;
+        useCapture?: boolean;
+    };
+}>;
 
 export abstract class Block<Props extends BlockOwnProps = {}> {
+    static componentName: string;
+
     protected children: Array<Block<BlockOwnProps>> = [];
 
-    protected events: EventListType = {};
+    protected events: MapEventNameToListenerArgs = {};
 
     protected props: Partial<Props> = {};
 
@@ -58,10 +65,16 @@ export abstract class Block<Props extends BlockOwnProps = {}> {
 
     private attachListeners() {
         // eslint-disable-next-line guard-for-in
-        for (const eventName in this.events) {
-            const eventCallback = this.events[eventName as keyof HTMLElementEventMap];
-            if (typeof eventCallback === "function" && this.domElement) {
-                this.domElement.addEventListener(eventName, eventCallback);
+        for (const key in this.events) {
+            const eventName = key as keyof MapEventNameToListenerArgs;
+            const args = this.events[eventName];
+
+            if (args && this.domElement) {
+                this.domElement.addEventListener(
+                    eventName,
+                    args.listener as EventListener,
+                    args.useCapture,
+                );
             }
         }
     }

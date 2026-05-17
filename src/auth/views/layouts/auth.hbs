@@ -1,25 +1,9 @@
 <main class="auth-layout">
     <div class="auth-card">
         <h1 class="auth-card__title">{{title}}</h1>
-
-        <form class="auth-form" action="{{action}}">
-            <div class="auth-form__rows">
-                {{#each fields}}
-                    {{{
-                        Input
-                            disabled=this.disabled
-                            label=this.label
-                            name=this.name
-                            type=this.type
-                            required=this.required
-                            value=this.value
-                    }}}
-                {{/each}}
-            </div>
-
-            <div class="auth-form__actions">
-                {{> @partial-block }}
-            </div>
-        </form>
+        {{{ AuthForm fields=fields onSubmit=onSubmit validators=validators }}}
+        <div class="auth-card__actions">
+            {{> @partial-block }}
+        </div>
     </div>
 </main>

@@ -1,22 +1,21 @@
-import "@/shared/components/input/input";
+import "@/profile/components/profile-form/profile-form";
+import profileSidebar from "@/profile/components/profile-sidebar/profile-sidebar.hbs?raw";
 import { DISABLED_PROFILE_FIELDS_MOCK } from "@/profile/models/mocks";
-import profileSidebar from "@/profile/views/components/profile-sidebar/profile-sidebar.hbs?raw";
 import profileMainTemplate from "@/profile/views/layouts/profile-main.hbs?raw";
+import "@/profile/views/layouts/profile-main.scss";
 import profile from "@/profile/views/layouts/profile.hbs?raw";
-import { type InputProps } from "@/shared/components/input/types";
+import "@/profile/views/layouts/styles.scss";
+import { type FormProps } from "@/shared/components/form";
 import { View } from "@/shared/components/view";
 import { NoViewElementFoundError } from "@/shared/utils/errors";
-import "@/profile/views/layouts/profile-main.scss";
 import { insertElement } from "@/shared/utils/helpers";
-import "@/profile/views/layouts/styles.scss";
 import Handlebars from "handlebars";
 
 Handlebars.registerPartial("profile-sidebar", profileSidebar);
 Handlebars.registerPartial("profile", profile);
 
-type ProfileMainViewProps = {
+type ProfileMainViewProps = Pick<FormProps, "fields"> & {
     displayName: string;
-    fields: InputProps[];
 };
 
 class ProfileMainView extends View<ProfileMainViewProps> {

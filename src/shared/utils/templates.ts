@@ -3,9 +3,14 @@ import Handlebars, { type HelperOptions } from "handlebars";
 
 let uniqueId = 0;
 
-export const registerComponent = <P extends {}>(Component: new (props: P) => Block<P>) => {
+type BlockConstructor<P extends {}> = {
+    new (props: P): Block<P>;
+    componentName: string;
+};
+
+export const registerComponent = <P extends {}>(Component: BlockConstructor<P>) => {
     Handlebars.registerHelper(
-        Component.name,
+        Component.componentName,
         function (this: unknown, { data, hash: props }: HelperOptions) {
             const dataAttribute = `data-component-hbs-id="${++uniqueId}"`;
             const component = new Component(props as P);
@@ -21,7 +26,9 @@ export const registerComponent = <P extends {}>(Component: new (props: P) => Blo
                 embed(node: DocumentFragment) {
                     const placeholder = node.querySelector(`[${dataAttribute}]`);
                     if (!placeholder) {
-                        throw new Error(`Can't find data-id for component ${Component.name}`);
+                        throw new Error(
+                            `Can't find data-id for component ${Component.componentName}`,
+                        );
                     }
 
                     const element = component.element();

@@ -47,12 +47,17 @@
 
 Запустить собранную статику на локальном сервере.
 
+### `npm run lint:css`
+### `npm run lint:css:fix`
+
+Команды для линтинга CSS.
+
+### `npm run lint:js`
+### `npm run lint:js:fix`
+
+Команды для линтинга JS.
+
 ### `npm run lint`
 ### `npm run lint:fix`
 
-Команды eslint.
-
-### `npm run stylelint`
-### `npm run stylelint:fix`
-
-Команды stylelint.
+Проверка типизации, линтинг CSS и JS.

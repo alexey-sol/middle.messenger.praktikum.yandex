@@ -16,6 +16,11 @@
         padding: 10px 20px;
         font-size: 12px;
     }
+
+    // TODO доработать индикацию
+    &__input:invalid {
+        background-color: lightpink;
+    }
     
     &__send-btn {
         display: flex;
