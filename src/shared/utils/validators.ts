@@ -90,8 +90,8 @@ export const validatePassword = (input: HTMLInputElement) => {
     return !message;
 };
 
-const MIN_PHONE_LENGTH = 3;
-const MAX_PHONE_LENGTH = 20;
+const MIN_PHONE_LENGTH = 10;
+const MAX_PHONE_LENGTH = 15;
 
 export const validatePhone = (input: HTMLInputElement) => {
     const value = input.value.trim();

@@ -64,8 +64,11 @@ export abstract class Block<Props extends BlockOwnProps = {}> {
     }
 
     private attachListeners() {
-        // eslint-disable-next-line guard-for-in
         for (const key in this.events) {
+            if (!Object.hasOwn(this.events, key)) {
+                continue;
+            }
+
             const eventName = key as keyof MapEventNameToListenerArgs;
             const args = this.events[eventName];
 
@@ -112,11 +115,19 @@ export abstract class Block<Props extends BlockOwnProps = {}> {
     }
 
     private removeListeners() {
-        // eslint-disable-next-line guard-for-in
         for (const eventName in this.events) {
-            const eventCallback = this.events[eventName as keyof HTMLElementEventMap];
-            if (typeof eventCallback === "function" && this.domElement) {
-                this.domElement.removeEventListener(eventName, eventCallback);
+            if (!Object.hasOwn(this.events, eventName)) {
+                continue;
+            }
+
+            const args = this.events[eventName as keyof HTMLElementEventMap];
+
+            if (typeof args?.listener === "function" && this.domElement) {
+                this.domElement.removeEventListener(
+                    eventName,
+                    args?.listener as EventListener,
+                    args.useCapture,
+                );
             }
         }
     }

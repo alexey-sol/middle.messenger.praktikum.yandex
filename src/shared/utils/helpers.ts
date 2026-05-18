@@ -44,7 +44,7 @@ export const logFormValues = (event: SubmitEvent, fields: InputProps[]) => {
         return;
     }
 
-    const values = fields.reduce<Record<string, unknown>>((acc, { name = "" }) => {
+    const values = fields.reduce<Record<string, unknown>>((acc, { name }) => {
         const input = form.elements.namedItem(name);
 
         if (input instanceof HTMLInputElement) {
