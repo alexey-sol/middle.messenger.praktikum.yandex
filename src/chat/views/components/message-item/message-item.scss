@@ -1,0 +1,60 @@
+@use "@/styles/constants" as *;
+
+.message-item {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 12px;
+    max-width: 400px;
+    font-size: 12px;
+    position: relative;
+
+    &--incoming {
+        background: #F8F8F8;
+        align-self: flex-start;
+    }
+
+    &--outgoing {
+        background: $color-secondary;
+        align-self: flex-end;
+    }
+
+    &__attached-images {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        
+        &:not(:first-child) {
+            margin-top: 10px;
+        }
+    }
+
+    &__meta {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        bottom: 0;
+        right: 0;
+    }
+    
+    &__time {
+        display: block;
+        text-align: right;
+        font-size: 9px;
+
+        &--outgoing {
+            color: $color-primary;
+        }
+    }
+
+    p {
+        margin: 0;
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    p:not(:first-of-type) {
+        margin-top: 10px;
+    }
+}

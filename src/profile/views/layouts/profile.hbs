@@ -1,0 +1,7 @@
+<main class="profile-layout">
+    {{> profile-sidebar }}
+    <div class="form-wrapper">
+        {{{ ProfileForm fields=fields onSubmit=onSubmit validators=validators }}}
+        {{> @partial-block }}
+    </div>
+</main>

@@ -1,0 +1,66 @@
+@use "@/styles/constants" as *;
+@use "../../components/profile-sidebar/profile-sidebar.scss" as *;
+
+.profile-layout {
+    display: flex;
+    height: 100vh;
+}
+
+.form-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.profile-form {
+    width: 100%;
+    max-width: $profile-max-width;
+}
+
+.profile-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-header {
+    margin-bottom: 60px;
+    text-align: center;
+
+    &__name {
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0;
+    }
+}
+
+.profile-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 130px;
+    height: 130px;
+    background: $color-input-bg;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 20px;
+    transition: filter 100ms;
+    cursor: pointer;
+
+    &__input {
+        display: none;
+    }
+
+    &:hover {
+        filter: brightness(0.6);
+    }
+}
+
+.profile-rows {
+    width: 100%;
+    margin-bottom: 40px;
+}

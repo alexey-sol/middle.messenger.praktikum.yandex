@@ -1,0 +1,42 @@
+@use "@/styles/constants" as *;
+
+.sidebar {
+    width: 310px;
+    background: $color-sidebar-bg;
+    border-right: 1px solid $color-border;
+    display: flex;
+    flex-direction: column;
+
+    &__header {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 16px 10px;
+        text-align: right;
+    }
+
+    &__profile-link {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        gap: 6px;
+        color: $color-text-light;
+        text-decoration: none;
+        font-size: 12px;
+    }
+
+    &__search {
+        padding: 8px;
+        border: none;
+        border-radius: 5px;
+        background: $color-input-bg;
+        text-align: center;
+        font-size: 12px;
+    }
+
+    &__chat-list {
+        margin: 0;
+        padding: 0;
+        overflow-y: auto;
+    }
+}

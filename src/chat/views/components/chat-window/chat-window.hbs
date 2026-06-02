@@ -1,0 +1,39 @@
+<section class="chat-window">
+    <header class="chat-header">
+        <div class="chat-header__wrapper">
+            <div class="chat-header__info">
+                <div class="chat-header__avatar"></div>
+                <span class="chat-header__name">{{activeChat.title}}</span>
+            </div>
+
+            <div class="chat-settings">
+                <button class="chat-settings__btn">
+                    <img src="/assets/icons/settings.svg" alt="Settings">
+                </button>
+
+                {{> dropdown class="chat-settings__dropdown" items=settingsDropdownItems }}
+            </div>
+        </div>
+    </header>
+
+    <div class="chat-feed">
+        {{#each activeChat.messages}}
+            {{#if (isFirstDateOccurrence this ../activeChat.messages)}}
+                <p class="chat-feed__message-date">{{formatChatMessageDate this.date}}</p>
+            {{/if}}
+
+            {{{
+                MessageItem
+                    date=this.date
+                    images=this.images
+                    isChecked=this.isChecked
+                    isOutgoing=this.isOutgoing
+                    message=this.message
+            }}}
+        {{/each}}
+    </div>
+
+    <footer class="chat-footer">
+        {{{ SendMessageForm attachDropdownItems=attachDropdownItems fields=fields onSubmit=onSubmit validators=validators }}}
+    </footer>
+</section>

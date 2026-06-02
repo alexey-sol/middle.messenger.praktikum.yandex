@@ -1,0 +1,22 @@
+<aside class="sidebar">
+    <div class="sidebar__header">
+        <a href="/src/profile/views/pages/profile-main" class="sidebar__profile-link">
+            Профиль <img src="/assets/icons/chevron-right.svg" alt="Arrow">
+        </a>
+
+        <input name="message" type="text" class="sidebar__search" placeholder="Поиск" aria-label="Поиск">
+    </div>
+
+    <ul class="sidebar__chat-list">
+        {{#each chatItems}}
+            {{{
+                ChatItem
+                    date=this.date
+                    isOutgoing=this.isOutgoing
+                    lastMessage=this.lastMessage
+                    title=this.title
+                    unreadCount=this.unreadCount
+            }}}
+        {{/each}}
+    </ul>
+</aside>

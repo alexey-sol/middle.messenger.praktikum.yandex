@@ -1,0 +1,9 @@
+<main class="auth-layout">
+    <div class="auth-card">
+        <h1 class="auth-card__title">{{title}}</h1>
+        {{{ AuthForm fields=fields onSubmit=onSubmit validators=validators }}}
+        <div class="auth-card__actions">
+            {{> @partial-block }}
+        </div>
+    </div>
+</main>

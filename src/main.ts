@@ -1,1 +1,1 @@
-import "@/chat/views/chat";
+import "@/chat/controllers/chat";
