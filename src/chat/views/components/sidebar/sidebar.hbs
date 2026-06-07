@@ -1,17 +1,24 @@
 <aside class="sidebar">
     <div class="sidebar__header">
-        <a href="/src/profile/views/pages/profile-main" class="sidebar__profile-link">
+        <a href="/settings" data-to="/settings" class="sidebar__profile-link">
             Профиль <img src="/assets/icons/chevron-right.svg" alt="Arrow">
         </a>
 
-        <input name="message" type="text" class="sidebar__search" placeholder="Поиск" aria-label="Поиск">
+        <div class="sidebar__menu">
+            <button class="sidebar__create-chat-button" data-case="create-chat">
+                <img class="sidebar__create-chat-icon" width="20" src="/assets/icons/add.svg">
+            </button>
+            <input name="message" type="text" class="sidebar__search" placeholder="Поиск" aria-label="Поиск">
+        </div>
     </div>
 
     <ul class="sidebar__chat-list">
-        {{#each chatItems}}
+        {{#if chats.isLoading}}<div class="sidebar__chats-loader">{{> loader }}</div>{{/if}}
+        {{#each chats.data}}
             {{{
                 ChatItem
                     date=this.date
+                    id=this.id
                     isOutgoing=this.isOutgoing
                     lastMessage=this.lastMessage
                     title=this.title

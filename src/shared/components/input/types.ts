@@ -1,8 +1,10 @@
-export type InputProps = Partial<Pick<HTMLInputElement, "disabled" | "placeholder" | "value">> & {
+export type InputProps = Partial<
+    Pick<HTMLInputElement, "className" | "disabled" | "placeholder" | "value">
+> & {
     error?: string;
     label?: string;
     name: string;
     ref?: string;
     type: string;
-    variant?: "floating" | "inline";
+    variantClassName?: string;
 };

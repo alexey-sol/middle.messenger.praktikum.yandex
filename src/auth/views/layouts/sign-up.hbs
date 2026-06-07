@@ -1,4 +1,4 @@
 {{#> auth }}
-    {{{ Button theme="primary" title="Зарегистрироваться" type="submit" form="auth-form" }}}
-    {{{ Button theme="secondary" title="Войти" type="button" to="/src/auth/views/pages/sign-in" }}}
+    {{{ Button theme="primary" title="Зарегистрироваться" type="submit" form="auth-form" disabled=user.isLoading }}}
+    {{{ Button theme="secondary" title="Войти" type="button" to="/" }}}
 {{/auth}}

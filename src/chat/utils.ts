@@ -2,6 +2,10 @@ import { DEFAULT_LOCALE } from "@/shared/constants";
 import { formatTime } from "@/shared/utils/formatters";
 
 export const formatChatItemDate = (dateString: string) => {
+    if (!dateString) {
+        return "";
+    }
+
     const date = new Date(dateString);
     const isToday = new Date().toDateString() === date.toDateString();
 

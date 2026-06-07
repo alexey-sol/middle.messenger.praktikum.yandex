@@ -1,0 +1,32 @@
+<main class="profile-layout">
+    {{> profile-sidebar mode=mode }}
+    <div class="form-wrapper">
+        {{{ ProfileForm user=user mode=mode onSubmit=onSubmit validators=validators }}}
+
+        {{#if (eq mode "settings-view")}}
+            <nav class="profile-links">
+                <ul class="profile-links__list">
+                    <li class="profile-links__item">
+                        <a href="/" data-case="settings-edit" class="profile-links__link">
+                            Изменить данные
+                        </a>
+                    </li>
+                    <li class="profile-links__item">
+                        <a href="/" data-case="password-edit" class="profile-links__link">
+                            Изменить пароль
+                        </a>
+                    </li>
+                    <li class="profile-links__item">
+                        <a href="/" data-case="logout" class="profile-links__link profile-links__link--danger">
+                            Выйти
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        {{else}}
+            {{{ Button title="Сохранить" theme="primary" type="submit" form="profile-form" }}}
+        {{/if}}
+    </div>
+
+    {{{ UpdateAvatarModal isOpen=modal.updateUserAvatar avatarFile=avatarFile }}}
+</main>

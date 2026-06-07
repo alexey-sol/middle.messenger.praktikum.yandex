@@ -1,11 +1,11 @@
-<div class="input" data-component>
-    <div class="input__wrapper">
-        <label class="input__label" for="{{name}}">
+<div class="input {{variantClassName}} {{#if className}}{{className}}{{/if}}" data-component>
+    <div class="{{variantClassName}}__wrapper">
+        <label class="{{variantClassName}}__label" for="{{name}}">
             {{label}}
         </label>
 
         <input
-            class="input__field"
+            class="input__field {{variantClassName}}__field"
             id="{{name}}"
             name="{{name}}"
             placeholder="{{placeholder}}"

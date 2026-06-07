@@ -1,4 +1,4 @@
-<li class="chat-item {{#if this.isActive}}chat-item--active{{/if}}">
+<li class="chat-item {{#if (eq this.id openedChat.id)}}chat-item--active{{/if}}" data-case="open-chat" data-chat-id="{{this.id}}">
     <div class="chat-item__wrapper">
         <div class="chat-item__avatar"></div>
         <div class="chat-item__content">

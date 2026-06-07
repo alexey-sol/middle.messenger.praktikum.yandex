@@ -3,7 +3,7 @@
         <div class="chat-header__wrapper">
             <div class="chat-header__info">
                 <div class="chat-header__avatar"></div>
-                <span class="chat-header__name">{{activeChat.title}}</span>
+                <span class="chat-header__name">{{openedChat.data.title}}</span>
             </div>
 
             <div class="chat-settings">
@@ -17,8 +17,8 @@
     </header>
 
     <div class="chat-feed">
-        {{#each activeChat.messages}}
-            {{#if (isFirstDateOccurrence this ../activeChat.messages)}}
+        {{#each openedChat.data.messages}}
+            {{#if (isFirstDateOccurrence this ../openedChat.data.messages)}}
                 <p class="chat-feed__message-date">{{formatChatMessageDate this.date}}</p>
             {{/if}}
 
@@ -34,6 +34,12 @@
     </div>
 
     <footer class="chat-footer">
-        {{{ SendMessageForm attachDropdownItems=attachDropdownItems fields=fields onSubmit=onSubmit validators=validators }}}
+        {{{
+            SendMessageForm
+                attachDropdownItems=attachDropdownItems
+                fields=fields
+                onSubmit=onSubmit
+                validators=validators
+        }}}
     </footer>
 </section>

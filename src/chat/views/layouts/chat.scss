@@ -8,4 +8,17 @@
     height: 100vh;
     overflow-y: hidden;
     background-color: $color-white;
+
+    &__stub {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+    }
+
+    &__stub-text {
+        margin: 0;
+        color: $color-text-light;
+        font-size: 14px;
+    }
 }

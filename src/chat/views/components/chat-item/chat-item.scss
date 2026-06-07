@@ -19,6 +19,7 @@
         gap: 10px;
         padding: 10px 0;
         border-top: 1px solid $color-border;
+        pointer-events: none;
     }
 
     &__avatar {

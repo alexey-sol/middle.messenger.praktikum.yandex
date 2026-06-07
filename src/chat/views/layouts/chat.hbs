@@ -1,4 +1,15 @@
 <main class="chat">
     {{> sidebar }}
-    {{> chat-window }}
+
+    {{#if openedChat.data}}
+        {{> chat-window }}
+    {{else}}
+        <div class="chat__stub">
+            <p class="chat__stub-text">Выберите чат</p>
+        </div>
+    {{/if}}
+
+    {{{ AddChatUserModal isOpen=modal.addChatUser }}}
+    {{{ DeleteChatUserModal isOpen=modal.deleteChatUser }}}
+    {{{ CreateChatModal isOpen=modal.createChat }}}
 </main>

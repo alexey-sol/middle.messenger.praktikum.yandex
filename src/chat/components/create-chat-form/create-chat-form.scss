@@ -1,0 +1,10 @@
+.create-chat-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+
+    &__input {
+        width: 100%;
+    }
+}

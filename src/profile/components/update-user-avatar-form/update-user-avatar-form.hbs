@@ -1,0 +1,16 @@
+<form class="update-user-avatar-form">
+    <label for="update-user-avatar">
+        <a class="update-user-avatar-form__link">
+            Выбрать файл на компьютере
+        </a>
+        <input type="file" class="update-user-avatar-form__input" id="update-user-avatar" name="avatar" accept="image/*">
+    </label>
+
+    {{#if (getFileUrl this.avatarFile)}}
+        <img src="{{{getFileUrl this.avatarFile}}}" class="update-user-avatar-form__image" id="avatar-preview">
+
+        <div>
+            {{{ Button theme="primary" title="Поменять" type="submit" }}}
+        </div>
+    {{/if}}
+</form>
