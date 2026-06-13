@@ -1,6 +1,12 @@
 <li class="chat-item {{#if (eq this.id openedChat.id)}}chat-item--active{{/if}}" data-case="open-chat" data-chat-id="{{this.id}}">
     <div class="chat-item__wrapper">
-        <div class="chat-item__avatar"></div>
+        <div class="chat-item-avatar">
+            <img
+                class="chat-item-avatar__image"
+                src={{#if this.avatar}}"{{{getResourceUrl this.avatar}}}"{{else}}"/assets/icons/default-avatar.svg"{{/if}}
+                alt="{{this.title}}"
+            >
+        </div>
         <div class="chat-item__content">
             <div class="chat-item__row">
                 <span class="chat-item__name">{{this.title}}</span>

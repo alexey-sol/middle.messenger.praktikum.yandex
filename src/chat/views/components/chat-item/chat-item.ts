@@ -1,6 +1,6 @@
 import { connect } from "@/app/store/store";
 import { type ChatItem as ChatItemProps, type MessengerState } from "@/chat/types";
-import { formatChatItemDate } from "@/chat/utils";
+import { formatChatItemDate } from "@/chat/utils/utils";
 import chatItemTemplate from "@/chat/views/components/chat-item/chat-item.hbs?raw";
 import "@/chat/views/components/chat-item/chat-item.scss";
 import { Block } from "@/shared/components/block";

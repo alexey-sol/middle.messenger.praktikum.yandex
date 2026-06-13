@@ -14,6 +14,7 @@ import settingsTemplate from "@/profile/views/layouts/settings.hbs?raw";
 import { type MapEventNameToListenerArgs } from "@/shared/components/block";
 import { type FormProps } from "@/shared/components/form";
 import { View } from "@/shared/components/view";
+import { type HasAvatarFile } from "@/shared/types";
 import { equals, getFormValues } from "@/shared/utils/helpers";
 import Handlebars from "handlebars";
 
@@ -21,14 +22,14 @@ Handlebars.registerPartial("profile-sidebar", profileSidebar);
 
 Handlebars.registerHelper("eq", equals);
 
-export type SettingsViewProps = Pick<FormProps, "onSubmit" | "validators"> & {
-    avatarFile?: File | null;
-    modal?: null | {
-        updateUserAvatar?: boolean;
+export type SettingsViewProps = Partial<HasAvatarFile> &
+    Pick<FormProps, "onSubmit" | "validators"> & {
+        modal?: null | {
+            updateUserAvatar?: boolean;
+        };
+        mode: SettingsMode;
+        user?: Required<AuthState>["auth"]["user"];
     };
-    mode: SettingsMode;
-    user?: Required<AuthState>["auth"]["user"];
-};
 
 export class SettingsView extends View<SettingsViewProps> {
     private handleCloseModal = (event: Event) => {
@@ -38,7 +39,7 @@ export class SettingsView extends View<SettingsViewProps> {
             return;
         }
 
-        if ("modalOverlay" in target.dataset) {
+        if (target.dataset.case === "close-modal") {
             this.setProps({ modal: null });
         }
     };
@@ -79,7 +80,7 @@ export class SettingsView extends View<SettingsViewProps> {
                 event.preventDefault();
                 this.setProps({ mode: "settings-edit" });
                 break;
-            case "update-user-avatar":
+            case "update-avatar":
                 event.preventDefault();
                 this.setProps({
                     modal: { ...this.props.modal, updateUserAvatar: true },
@@ -205,7 +206,7 @@ export class SettingsView extends View<SettingsViewProps> {
             return;
         }
 
-        if (target && target.id === "update-user-avatar" && target.files?.length) {
+        if (target && target.id === "update-avatar" && target.files?.length) {
             const avatarFile = target.files[0];
 
             this.setProps({ avatarFile });

@@ -5,7 +5,7 @@
         </a>
 
         <div class="sidebar__menu">
-            <button class="sidebar__create-chat-button" data-case="create-chat">
+            <button class="sidebar__create-chat-button" data-case="create-chat" aria-label="Открыть окно создания чата" type="button">
                 <img class="sidebar__create-chat-icon" width="20" src="/assets/icons/add.svg">
             </button>
             <input name="message" type="text" class="sidebar__search" placeholder="Поиск" aria-label="Поиск">
@@ -17,6 +17,7 @@
         {{#each chats.data}}
             {{{
                 ChatItem
+                    avatar=this.avatar
                     date=this.date
                     id=this.id
                     isOutgoing=this.isOutgoing

@@ -106,17 +106,19 @@ const request = <T = unknown>(url: string, options: RequestOptions = {}, timeout
     });
 };
 
+type HttpRequest = <R>(url: string, options?: RequestOptions) => Promise<R>;
+
 export const HttpTransport = {
-    delete: <T>(url: string, options: RequestOptions = {}) => {
-        return request<T>(url, { ...options, method: METHODS.DELETE }, options.timeout);
+    delete: (url, options = {}) => {
+        return request(url, { ...options, method: METHODS.DELETE }, options.timeout);
     },
-    get: <T>(url: string, options: RequestOptions = {}) => {
-        return request<T>(url, { ...options, method: METHODS.GET }, options.timeout);
+    get: (url, options = {}) => {
+        return request(url, { ...options, method: METHODS.GET }, options.timeout);
     },
-    post: <T>(url: string, options: RequestOptions = {}) => {
-        return request<T>(url, { ...options, method: METHODS.POST }, options.timeout);
+    post: (url, options = {}) => {
+        return request(url, { ...options, method: METHODS.POST }, options.timeout);
     },
-    put: <T>(url: string, options: RequestOptions = {}) => {
-        return request<T>(url, { ...options, method: METHODS.PUT }, options.timeout);
+    put: (url, options = {}) => {
+        return request(url, { ...options, method: METHODS.PUT }, options.timeout);
     },
-};
+} satisfies Record<"delete" | "get" | "post" | "put", HttpRequest>;

@@ -1,5 +1,5 @@
 import { connect } from "@/app/store/store";
-import { type SettingsState } from "@/profile/types";
+import { type MessengerState } from "@/chat/types";
 import { Form } from "@/shared/components/form";
 import { type UpdateAvatarFormProps } from "@/shared/components/update-avatar-form/types";
 import template from "@/shared/components/update-avatar-form/update-avatar-form.hbs?raw";
@@ -10,17 +10,17 @@ import Handlebars from "handlebars";
 
 Handlebars.registerHelper("getFileUrl", getFileUrl);
 
-export class UpdateUserAvatarForm extends Form<UpdateAvatarFormProps> {
-    static componentName = "UpdateUserAvatarForm";
+export class UpdateChatAvatarForm extends Form<UpdateAvatarFormProps> {
+    static componentName = "UpdateChatAvatarForm";
 
     protected override template = template;
 }
 
-const mapStateToProps = (state: SettingsState) => {
+const mapStateToProps = (state: MessengerState) => {
     return {
-        onChange: state.settings?.form?.updateUserAvatar?.onChange,
-        onSubmit: state.settings?.form?.updateUserAvatar?.onSubmit,
+        onChange: state.messenger?.form?.updateChatAvatar?.onChange,
+        onSubmit: state.messenger?.form?.updateChatAvatar?.onSubmit,
     };
 };
 
-registerComponent(connect(mapStateToProps)(UpdateUserAvatarForm));
+registerComponent(connect(mapStateToProps)(UpdateChatAvatarForm));

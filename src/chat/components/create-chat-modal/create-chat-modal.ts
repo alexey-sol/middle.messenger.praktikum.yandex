@@ -1,4 +1,4 @@
-import createChatModalTemplate from "./create-chat-modal.hbs?raw";
+import template from "./create-chat-modal.hbs?raw";
 import "@/shared/components/button/button";
 import { Block } from "@/shared/components/block";
 import "../create-chat-form/create-chat-form";
@@ -12,7 +12,7 @@ export type CreateChatModalProps = {
 export class CreateChatModal extends Block<CreateChatModalProps> {
     static componentName = "CreateChatModal";
 
-    protected override template = createChatModalTemplate;
+    protected override template = template;
 }
 
 registerComponent(CreateChatModal);

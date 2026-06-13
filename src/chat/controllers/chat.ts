@@ -8,7 +8,7 @@ import sidebar from "../views/components/sidebar/sidebar.hbs?raw";
 import chatTemplate from "../views/layouts/chat.hbs?raw";
 import { connect, store } from "@/app/store/store";
 import { type User } from "@/auth/api";
-import { formatChatMessageDate, isFirstDateOccurrence } from "@/chat/utils";
+import { formatChatMessageDate, isFirstDateOccurrence } from "@/chat/utils/utils";
 import { type SearchUserRequest, UsersController } from "@/profile/api";
 import "../components/create-chat-modal/create-chat-modal";
 import { type MapEventNameToListenerArgs } from "@/shared/components/block";
@@ -18,9 +18,11 @@ import "../views/components/message-item/message-item";
 import loader from "@/shared/components/loader/loader.hbs?raw";
 import { View } from "@/shared/components/view";
 import "../views/layouts/chat.scss";
-import { type DropdownItem } from "@/shared/types";
-import { getFormValues } from "@/shared/utils/helpers";
+import { type DropdownItem, type HasAvatarFile } from "@/shared/types";
+import { getFormValues, getResourceUrl } from "@/shared/utils/helpers";
 import Handlebars from "handlebars";
+import "../components/update-chat-avatar-modal/update-chat-avatar-modal";
+import "../components/delete-chat-modal/delete-chat-modal";
 
 Handlebars.registerPartial("sidebar", sidebar);
 Handlebars.registerPartial("chat-window", chatWindow);
@@ -28,18 +30,22 @@ Handlebars.registerPartial("loader", loader);
 
 Handlebars.registerHelper("formatChatMessageDate", formatChatMessageDate);
 Handlebars.registerHelper("isFirstDateOccurrence", isFirstDateOccurrence);
+Handlebars.registerHelper("getResourceUrl", getResourceUrl);
 
-type ChatViewProps = Pick<FormProps, "fields" | "onSubmit" | "validators"> & {
-    attachDropdownItems: DropdownItem[];
-    chats?: Required<MessengerState>["messenger"]["chats"];
-    modal?: null | {
-        addChatUser?: boolean;
-        createChat?: boolean;
-        deleteChatUser?: boolean;
+type ChatViewProps = Partial<HasAvatarFile> &
+    Pick<FormProps, "fields" | "onSubmit" | "validators"> & {
+        attachDropdownItems: DropdownItem[];
+        chats?: Required<MessengerState>["messenger"]["chats"];
+        modal?: null | {
+            addChatUser?: boolean;
+            createChat?: boolean;
+            deleteChat?: boolean;
+            deleteChatUser?: boolean;
+            updateChatAvatar?: boolean;
+        };
+        openedChat?: Required<MessengerState>["messenger"]["openedChat"];
+        settingsDropdownItems: DropdownItem[];
     };
-    openedChat?: Required<MessengerState>["messenger"]["openedChat"];
-    settingsDropdownItems: DropdownItem[];
-};
 
 class ChatView extends View<ChatViewProps> {
     private handleCloseModal = (event: Event) => {
@@ -49,10 +55,8 @@ class ChatView extends View<ChatViewProps> {
             return;
         }
 
-        if ("modalOverlay" in target.dataset) {
-            this.setProps({
-                modal: null,
-            });
+        if (target.dataset.case === "close-modal") {
+            this.setProps({ modal: null });
         }
     };
 
@@ -76,6 +80,12 @@ class ChatView extends View<ChatViewProps> {
                     modal: { ...this.props.modal, createChat: true },
                 });
                 break;
+            case "delete-chat":
+                event.preventDefault();
+                this.setProps({
+                    modal: { ...this.props.modal, deleteChat: true },
+                });
+                break;
             case "delete-chat-user":
                 event.preventDefault();
                 this.setProps({
@@ -86,11 +96,21 @@ class ChatView extends View<ChatViewProps> {
                 event.preventDefault();
 
                 if (target.dataset.chatId) {
-                    this.openChat(Number(target.dataset.chatId));
+                    const chatId = Number(target.dataset.chatId);
+
+                    this.openChat(chatId);
+                    ChatsController.getChatUsers({ chatId });
                 }
 
                 break;
             }
+
+            case "update-avatar":
+                event.preventDefault();
+                this.setProps({
+                    modal: { ...this.props.modal, updateChatAvatar: true },
+                });
+                break;
         }
     };
 
@@ -111,6 +131,9 @@ class ChatView extends View<ChatViewProps> {
         store.setState("messenger.form.addChatUser.onSubmit", this.handleAddChatUser);
         store.setState("messenger.form.deleteChatUser.onSubmit", this.handleDeleteChatUser);
         store.setState("messenger.form.createChat.onSubmit", this.handleCreateChat);
+        store.setState("messenger.form.deleteChat.onSubmit", this.handleDeleteChat);
+        store.setState("messenger.form.updateChatAvatar.onSubmit", this.handleUpdateChatAvatar);
+        store.setState("messenger.form.updateChatAvatar.onChange", this.handleChatAvatarChange);
     }
 
     componentDidMount() {
@@ -119,8 +142,26 @@ class ChatView extends View<ChatViewProps> {
         });
     }
 
+    private getOpenedChatId = () => {
+        return this.props.openedChat?.data?.id;
+    };
+
     private handleAddChatUser = async (event: SubmitEvent) => {
         return this.handleToggleChatUser(event, ChatsController.addUser, "добавление");
+    };
+
+    private handleChatAvatarChange = (event: Event) => {
+        const target = event.target;
+
+        if (!(target instanceof HTMLInputElement)) {
+            return;
+        }
+
+        if (target && target.id === "update-avatar" && target.files?.length) {
+            const avatarFile = target.files[0];
+
+            this.setProps({ avatarFile });
+        }
     };
 
     private handleCreateChat = async (event: SubmitEvent) => {
@@ -138,6 +179,25 @@ class ChatView extends View<ChatViewProps> {
             this.setProps({ modal: null });
         } catch (error) {
             console.error("Ошибка при создании чата", error);
+        }
+    };
+
+    private handleDeleteChat = async (event: SubmitEvent) => {
+        event.preventDefault();
+
+        const chatId = this.getOpenedChatId();
+
+        if (typeof chatId !== "number") {
+            console.error("Не удалось получить id чата");
+            return;
+        }
+
+        try {
+            await ChatsController.deleteChat({ chatId });
+            await ChatsController.getChats();
+            this.setProps({ modal: null });
+        } catch (error) {
+            console.error("Ошибка при удалении чата", error);
         }
     };
 
@@ -181,9 +241,37 @@ class ChatView extends View<ChatViewProps> {
             await onToggle(toggleUserRequest);
             console.log(`Успех. ${actionText}. Пользователь: ${searchUserRequest.login}`);
             this.setProps({ modal: null });
+
+            const chatId = this.getOpenedChatId();
+
+            if (typeof chatId === "number") {
+                await ChatsController.getChatUsers({ chatId });
+            }
         } catch (error) {
             console.error(`Ошибка. ${actionText}. Пользователь: ${searchUserRequest.login}`, error);
         }
+    };
+
+    private handleUpdateChatAvatar = (event: SubmitEvent) => {
+        event.preventDefault();
+
+        const chatId = this.getOpenedChatId();
+
+        if (!this.props.avatarFile || typeof chatId !== "number") {
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("chatId", chatId.toString());
+        formData.append("avatar", this.props.avatarFile);
+
+        ChatsController.updateAvatar(formData)
+            .then(() => {
+                this.setProps({ avatarFile: null, modal: null });
+            })
+            .catch((error) => {
+                console.error("Ошибка при обновлении аватара", error);
+            });
     };
 
     private mapToogleChatUserRequest = async (

@@ -1,7 +1,7 @@
 <ul class="{{#if class}}{{class}}{{/if}} dropdown">
     {{#each items}}
         <li class="dropdown__item">
-            <button {{#if this.dataCase}}data-case="{{this.dataCase}}"{{/if}} class="dropdown__button">
+            <button {{#if this.dataCase}}data-case="{{this.dataCase}}"{{/if}} class="dropdown__button" type="button">
                 {{#if this.iconUrl}}
                     <img src="{{this.iconUrl}}">
                 {{/if}}

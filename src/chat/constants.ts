@@ -12,6 +12,11 @@ export const SETTINGS_DROPDOWN_ITEMS: DropdownItem[] = [
         iconUrl: "/assets/icons/delete.svg",
         title: "Удалить пользователя",
     },
+    {
+        dataCase: "delete-chat",
+        iconUrl: "/assets/icons/delete.svg", // TODO нужна новая иконка
+        title: "Удалить чат",
+    },
 ];
 
 export const ATTACH_DROPDOWN_ITEMS: DropdownItem[] = [

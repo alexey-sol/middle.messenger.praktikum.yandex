@@ -1,4 +1,5 @@
 import { type FormState, type RequestState } from "@/app/store/types";
+import { type User } from "@/auth/api";
 
 export type ActiveChat = {
     messages: ChatMessage[];
@@ -32,8 +33,11 @@ export type MessengerState = {
         form?: {
             addChatUser?: FormState;
             createChat?: FormState;
+            deleteChat?: FormState;
             deleteChatUser?: FormState;
+            updateChatAvatar?: FormState;
         };
         openedChat?: RequestState<ChatItem>;
+        openedChatUsers?: RequestState<User[]>;
     };
 };

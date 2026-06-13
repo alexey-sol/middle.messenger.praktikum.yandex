@@ -3,11 +3,14 @@
         <div class="chat-header__wrapper">
             <div class="chat-header__info">
                 <div class="chat-header__avatar"></div>
+                <button class="opened-chat-avatar" data-case="update-avatar" aria-label="Открыть окно обновления аватара" type="button">
+                    <img class="opened-chat-avatar__image" src={{#if openedChat.data.avatar}}"{{{getResourceUrl openedChat.data.avatar}}}"{{else}}"/assets/icons/default-avatar.svg"{{/if}} alt="{{this.title}}" id="avatar-preview">
+                </button>
                 <span class="chat-header__name">{{openedChat.data.title}}</span>
             </div>
 
             <div class="chat-settings">
-                <button class="chat-settings__btn">
+                <button class="chat-settings__btn" aria-label="Открыть меню чата" type="button">
                     <img src="/assets/icons/settings.svg" alt="Settings">
                 </button>
 

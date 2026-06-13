@@ -1,7 +1,7 @@
 <form class="profile-form" id="profile-form" novalidate>
     <div class="profile-content">
         <div class="profile-header">
-            <button class="profile-avatar" data-case="update-user-avatar">
+            <button class="profile-avatar" data-case="update-avatar" aria-label="Отрыть окно обновления аватара" type="button">
                 <img class="profile-avatar__image" src={{#if user.avatar}}"{{{getResourceUrl user.avatar}}}"{{else}}"/assets/icons/default-avatar.svg"{{/if}} alt="{{user.login}}" id="avatar-preview">
             </button>
 

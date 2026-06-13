@@ -1,11 +1,12 @@
 import template from "./template.hbs?raw";
 import { type ToggleChatUserFormProps } from "./types";
+import { getOpenedChatState } from "./utils";
+import "@/shared/components/input/floating-input";
 import { connect } from "@/app/store/store";
 import { type MessengerState } from "@/chat/types";
-import { Form } from "@/shared/components/form";
 import "./styles.scss";
+import { Form } from "@/shared/components/form";
 import { registerComponent } from "@/shared/utils/templates";
-import "@/shared/components/input/floating-input";
 import { validateLogin } from "@/shared/utils/validators";
 
 export class AddChatUserForm extends Form<ToggleChatUserFormProps> {
@@ -26,6 +27,7 @@ export class AddChatUserForm extends Form<ToggleChatUserFormProps> {
 
 const mapStateToProps = (state: MessengerState) => {
     return {
+        ...getOpenedChatState(state),
         onSubmit: state.messenger?.form?.addChatUser?.onSubmit,
     };
 };

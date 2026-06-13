@@ -1,11 +1,11 @@
 import createChatFormTemplate from "./create-chat-form.hbs?raw";
 import { connect } from "@/app/store/store";
 import { type MessengerState } from "@/chat/types";
-import { Form, type FormProps } from "@/shared/components/form";
-import "./create-chat-form.scss";
-import { registerComponent } from "@/shared/utils/templates";
+import { validateChatTitle } from "@/chat/utils/validators";
 import "@/shared/components/input/floating-input";
-import { validateName } from "@/shared/utils/validators";
+import { Form, type FormProps } from "@/shared/components/form";
+import { registerComponent } from "@/shared/utils/templates";
+import "./create-chat-form.scss";
 
 type CreateChatFormProps = Pick<FormProps, "onSubmit" | "validators">;
 
@@ -18,7 +18,7 @@ export class CreateChatForm extends Form<CreateChatFormProps> {
         super(props);
         this.setProps({
             validators: {
-                title: validateName,
+                title: validateChatTitle,
             },
         });
     }

@@ -4,6 +4,7 @@ import { registerComponent } from "@/shared/utils/templates";
 import "./button.scss";
 
 export type ButtonProps = Pick<HTMLButtonElement, "disabled" | "form" | "type"> & {
+    dataCase?: string;
     theme?: "primary" | "secondary";
     title: string;
     to?: string;

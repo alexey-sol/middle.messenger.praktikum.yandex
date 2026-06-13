@@ -4,6 +4,10 @@ export type DropdownItem = {
     title: string;
 };
 
+export type HasAvatarFile = {
+    avatarFile: File | null;
+};
+
 export type HasId = {
     id: number;
 };
