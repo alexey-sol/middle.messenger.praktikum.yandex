@@ -1,0 +1,29 @@
+<form class="toggle-chat-user-form" novalidate>
+    <div>
+        {{{
+            FloatingInput
+                className="toggle-chat-user-form__input"
+                label="Логин"
+                name="login"
+                type="text"
+        }}}
+    </div>
+
+    {{#if openedChatUsers.data}}
+        <div>
+            <p class="toggle-chat-user-form__text">
+                Пользователи в чате:
+            </p>
+
+            <ul class="chat-user-list">
+                {{#each openedChatUsers.data}}
+                    <li class="chat-user-list__item">{{this.login}}</li>
+                {{/each}}
+            </ul>
+        </div>
+    {{/if}}
+
+    <div>
+        {{{ Button theme="primary" title=buttonTitle type="submit" }}}
+    </div>
+</form>

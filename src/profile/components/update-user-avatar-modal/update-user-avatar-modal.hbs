@@ -1,0 +1,10 @@
+<div class="modal {{#if isOpen}}modal--active{{/if}} update-user-avatar-modal">
+    <div class="modal__overlay" data-case="close-modal"></div>
+    <div class="modal__container">
+        <div class="modal__header">
+            <h2 class="modal__title">Загрузить файл</h2>
+            <button class="modal__close-btn" aria-label="Закрыть окно" data-case="close-modal" type="button">✖</button>
+        </div>
+        {{{ UpdateUserAvatarForm avatarFile=avatarFile }}}
+    </div>
+</div>

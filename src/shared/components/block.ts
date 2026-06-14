@@ -1,5 +1,7 @@
 import Handlebars from "handlebars";
 
+export type BlockConstructor<P extends BlockOwnProps> = new (props: P) => Block<P>;
+
 export type BlockOwnProps = Object & {
     __children?: Array<{
         component: Block<object>;
@@ -10,7 +12,7 @@ export type BlockOwnProps = Object & {
 
 export type MapEventNameToListenerArgs = Partial<{
     [K in keyof HTMLElementEventMap]: {
-        listener: (event: HTMLElementEventMap[K]) => void;
+        listener?: (event: HTMLElementEventMap[K]) => void;
         useCapture?: boolean;
     };
 }>;
@@ -29,6 +31,8 @@ export abstract class Block<Props extends BlockOwnProps = {}> {
     protected abstract template: string;
 
     private domElement: Element | null = null;
+
+    private isMounted = false;
 
     constructor(props: Props = {} as Props) {
         this.props = props;
@@ -61,6 +65,16 @@ export abstract class Block<Props extends BlockOwnProps = {}> {
 
         this.domElement = fragment;
         this.mountComponent();
+    }
+
+    protected unmountComponent() {
+        if (this.domElement) {
+            this.children.toReversed().forEach((child) => child.unmountComponent());
+            this.componentWillUnmount();
+            this.removeListeners();
+
+            this.isMounted = true;
+        }
     }
 
     private attachListeners() {
@@ -111,7 +125,11 @@ export abstract class Block<Props extends BlockOwnProps = {}> {
 
     private mountComponent() {
         this.attachListeners();
-        this.componentDidMount();
+
+        if (!this.isMounted) {
+            this.componentDidMount();
+            this.isMounted = true;
+        }
     }
 
     private removeListeners() {
@@ -129,14 +147,6 @@ export abstract class Block<Props extends BlockOwnProps = {}> {
                     args.useCapture,
                 );
             }
-        }
-    }
-
-    private unmountComponent() {
-        if (this.domElement) {
-            this.children.toReversed().forEach((child) => child.unmountComponent());
-            this.componentWillUnmount();
-            this.removeListeners();
         }
     }
 }

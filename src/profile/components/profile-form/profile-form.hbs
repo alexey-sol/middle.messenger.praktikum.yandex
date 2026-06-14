@@ -1,26 +1,83 @@
 <form class="profile-form" id="profile-form" novalidate>
     <div class="profile-content">
         <div class="profile-header">
-            <label class="profile-avatar" for="avatar-upload">
-                <img src="/assets/icons/default-avatar.svg" alt="{{displayName}}" id="avatar-preview">
-                <input class="profile-avatar__input" type="file" id="avatar-upload" name="avatar" accept="image/*">
-            </label>
+            <button class="profile-avatar" data-case="update-avatar" aria-label="Отрыть окно обновления аватара" type="button">
+                <img class="profile-avatar__image" src={{#if user.avatar}}"{{{getResourceUrl user.avatar}}}"{{else}}"/assets/icons/default-avatar.svg"{{/if}} alt="{{user.login}}" id="avatar-preview">
+            </button>
 
-            <h1 class="profile-header__name">{{displayName}}</h1>
+            <h1 class="profile-header__name">{{user.display_name}}</h1>
         </div>
 
         <div class="profile-rows">
-            {{#each fields}}
+            {{#if (eq mode "password-edit")}}
                 {{{
-                    Input
-                        disabled=this.disabled
-                        label=this.label
-                        name=this.name
-                        type=this.type
-                        value=this.value
-                        variant="inline"
+                    InlineInput
+                        label="Старый пароль"
+                        name="old_password"
+                        type="password"
                 }}}
-            {{/each}}
+                {{{
+                    InlineInput
+                        label="Новый пароль"
+                        name="new_password"
+                        type="password"
+                }}}
+                {{{
+                    InlineInput
+                        label="Повторите новый пароль"
+                        name="confirm_password"
+                        type="password"
+                }}}
+            {{else}}
+                {{{
+                    InlineInput
+                        disabled=(eq mode "settings-view")
+                        label="Почта"
+                        name="email"
+                        type="email"
+                        value=user.email
+                }}}
+                {{{
+                    InlineInput
+                        disabled=(eq mode "settings-view")
+                        label="Логин"
+                        name="login"
+                        type="text"
+                        value=user.login
+                }}}
+                {{{
+                    InlineInput
+                        disabled=(eq mode "settings-view")
+                        label="Имя"
+                        name="first_name"
+                        type="text"
+                        value=user.first_name
+                }}}
+                {{{
+                    InlineInput
+                        disabled=(eq mode "settings-view")
+                        label="Фамилия"
+                        name="second_name"
+                        type="text"
+                        value=user.second_name
+                }}}
+                {{{
+                    InlineInput
+                        disabled=(eq mode "settings-view")
+                        label="Имя в чате"
+                        name="display_name"
+                        type="text"
+                        value=user.display_name
+                }}}
+                {{{
+                    InlineInput
+                        disabled=(eq mode "settings-view")
+                        label="Телефон"
+                        name="phone"
+                        type="tel"
+                        value=user.phone
+                }}}
+            {{/if}}
         </div>
     </div>
 </form>

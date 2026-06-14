@@ -1,17 +1,18 @@
+import { type FormState, type RequestState } from "@/app/store/types";
+import { type User } from "@/auth/api";
+
 export type ActiveChat = {
     messages: ChatMessage[];
     title: string;
 };
 
 export type ChatItem = {
-    avatar?: null | string;
-    date: string;
-    id: string;
-    isActive?: boolean;
-    isOutgoing?: boolean;
-    lastMessage?: string;
+    avatar: null | string;
+    createdBy: number;
+    id: number;
+    lastMessage: null | string;
     title: string;
-    unreadCount?: number;
+    unreadCount: number;
 };
 
 export type ChatMessage = {
@@ -24,4 +25,19 @@ export type ChatMessage = {
     isChecked?: boolean;
     isOutgoing?: boolean;
     message?: string;
+};
+
+export type MessengerState = {
+    messenger?: {
+        chats?: RequestState<ChatItem[]>;
+        form?: {
+            addChatUser?: FormState;
+            createChat?: FormState;
+            deleteChat?: FormState;
+            deleteChatUser?: FormState;
+            updateChatAvatar?: FormState;
+        };
+        openedChat?: RequestState<ChatItem>;
+        openedChatUsers?: RequestState<User[]>;
+    };
 };

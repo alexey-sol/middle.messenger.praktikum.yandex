@@ -1,11 +1,13 @@
 <ul class="{{#if class}}{{class}}{{/if}} dropdown">
     {{#each items}}
         <li class="dropdown__item">
-            {{#if this.iconUrl}}
-                <img src="{{this.iconUrl}}">
-            {{/if}}
+            <button {{#if this.dataCase}}data-case="{{this.dataCase}}"{{/if}} class="dropdown__button" type="button">
+                {{#if this.iconUrl}}
+                    <img src="{{this.iconUrl}}">
+                {{/if}}
 
-            {{this.title}}
+                {{this.title}}
+            </button>
         </li>
     {{/each}}
 </ul>

@@ -5,5 +5,5 @@ type HasToPath = {
     dataset: { to: string };
 };
 
-export const hasToPath = (element: HTMLElement | null): element is HasToPath & HTMLButtonElement =>
-    element instanceof HTMLButtonElement && typeof element.dataset.to === "string";
+export const hasToPath = (element: HTMLElement | null): element is HasToPath & HTMLElement =>
+    !!element && typeof element.dataset.to === "string";

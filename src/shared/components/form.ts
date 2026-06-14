@@ -1,12 +1,12 @@
 import "@/shared/layouts/app.scss";
-import "@/shared/components/input/input";
 import { Block, type BlockOwnProps, type MapEventNameToListenerArgs } from "./block";
 import { type InputProps } from "./input/types";
 
 export type FormProps = BlockOwnProps & {
     class?: string;
-    fields: InputProps[];
+    fields?: InputProps[];
     onBlur?: (event: FocusEvent) => void;
+    onChange?: (event: Event) => void;
     onSubmit?: (event: SubmitEvent) => void;
     validators?: Record<string, (input: HTMLInputElement) => boolean>;
 };
@@ -26,6 +26,9 @@ export abstract class Form<P extends FormProps> extends Block<P> {
                 }
             },
             useCapture: true,
+        },
+        change: {
+            listener: this.props.onChange,
         },
         submit: {
             listener: (event) => {

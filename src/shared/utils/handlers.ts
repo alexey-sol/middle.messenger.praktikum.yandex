@@ -1,14 +1,15 @@
+import { router } from "../../app/router";
 import { hasToPath, isElement } from "./guards";
-import { navigate } from "./helpers";
 
 export const handleClickNavigate = (event: PointerEvent) => {
     if (!isElement(event.target)) {
         return;
     }
 
-    const button = event.target.closest<HTMLButtonElement>("[data-to]");
+    const button = event.target.closest<HTMLElement>("[data-to]");
 
     if (hasToPath(button)) {
-        navigate(button.dataset.to);
+        event.preventDefault();
+        router.go(button.dataset.to);
     }
 };

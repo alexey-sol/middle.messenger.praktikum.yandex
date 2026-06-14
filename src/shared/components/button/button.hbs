@@ -1,6 +1,7 @@
 <button
     class="button button--{{theme}}"
     type="{{type}}"
+    {{#if dataCase}}data-case="{{dataCase}}"{{/if}}
     {{#if to}}data-to="{{to}}"{{/if}}
     {{#if form}}form="{{form}}"{{/if}}
     {{#if disabled}}disabled{{/if}}
