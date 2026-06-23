@@ -1,4 +1,4 @@
-import { type ChatItem } from "./types";
+import { type ChatItem, type MessengerState } from "./types";
 import { HttpTransport } from "@/app/http-transport";
 import { store } from "@/app/store/store";
 import { type User } from "@/auth/api";
@@ -25,6 +25,14 @@ type GetChatsResponse = Array<
     }
 >;
 
+type GetChatTokenResponse = {
+    token: string;
+};
+
+type GetMessageCountResponse = {
+    unread_count: number;
+};
+
 type HasChatId = {
     chatId: number;
 };
@@ -45,8 +53,14 @@ const ChatsApi = {
     getChats() {
         return HttpTransport.get<GetChatsResponse>(`${API_BASE_URL}/chats`);
     },
+    getChatToken({ chatId }: HasChatId) {
+        return HttpTransport.post<GetChatTokenResponse>(`${API_BASE_URL}/chats/token/${chatId}`);
+    },
     getChatUsers({ chatId }: HasChatId) {
         return HttpTransport.get<User[]>(`${API_BASE_URL}/chats/${chatId}/users`);
+    },
+    getMessageCount({ chatId }: HasChatId) {
+        return HttpTransport.get<GetMessageCountResponse>(`${API_BASE_URL}/chats/new/${chatId}`);
     },
     updateAvatar(request: FormData) {
         return HttpTransport.put<ChatItem>(`${API_BASE_URL}/chats/avatar`, { data: request });
@@ -66,11 +80,18 @@ export const ChatsController = {
     deleteUser(request: ToggleChatUserRequest) {
         return ChatsApi.deleteChatUser(request);
     },
-    getChats() {
-        store.setState("messenger.chats.isLoading", true);
+    getChats(onSuccess?: () => void) {
+        const messenger = store.getState().messenger as MessengerState["messenger"];
+        const isUninitialized = !messenger?.chats?.data;
+
+        if (isUninitialized) {
+            store.setState("messenger.chats.isLoading", true);
+        }
 
         return ChatsApi.getChats()
             .then((data) => {
+                onSuccess?.();
+
                 const normalizedData =
                     data?.map((item) => ({
                         avatar: item.avatar,
@@ -87,10 +108,19 @@ export const ChatsController = {
                 store.setState("messenger.chats.isLoading", false);
             });
     },
+    getChatToken(request: HasChatId) {
+        return ChatsApi.getChatToken(request).then((response) => {
+            store.setState("messenger.openedChatToken.data", response);
+            return response;
+        });
+    },
     getChatUsers(request: HasChatId) {
         return ChatsApi.getChatUsers(request).then((response) => {
             store.setState("messenger.openedChatUsers.data", response);
         });
+    },
+    getMessageCount(request: HasChatId) {
+        return ChatsApi.getMessageCount(request);
     },
     updateAvatar(request: FormData) {
         return ChatsApi.updateAvatar(request).then((response) => {

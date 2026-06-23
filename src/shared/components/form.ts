@@ -11,7 +11,7 @@ export type FormProps = BlockOwnProps & {
     validators?: Record<string, (input: HTMLInputElement) => boolean>;
 };
 
-export abstract class Form<P extends FormProps> extends Block<P> {
+export abstract class Form<P extends FormProps> extends Block<P, HTMLFormElement> {
     protected override events: MapEventNameToListenerArgs = {
         blur: {
             listener: (event) => {

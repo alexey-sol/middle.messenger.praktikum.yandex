@@ -17,7 +17,7 @@ export type MapEventNameToListenerArgs = Partial<{
     };
 }>;
 
-export abstract class Block<Props extends BlockOwnProps = {}> {
+export abstract class Block<Props extends BlockOwnProps = {}, E extends Element = Element> {
     static componentName: string;
 
     protected children: Array<Block<BlockOwnProps>> = [];
@@ -47,7 +47,16 @@ export abstract class Block<Props extends BlockOwnProps = {}> {
     }
 
     public setProps(props: Partial<Props>) {
-        this.props = { ...this.props, ...props, __children: [], __refs: {} };
+        const currentChildren = this.props.__children ?? [];
+        const currentRefs = this.props.__refs ?? {};
+
+        this.props = {
+            ...this.props,
+            ...props,
+            __children: props.__children ?? currentChildren,
+            __refs: props.__refs ?? currentRefs,
+        };
+
         this.render();
     }
 
@@ -68,7 +77,7 @@ export abstract class Block<Props extends BlockOwnProps = {}> {
     }
 
     protected unmountComponent() {
-        if (this.domElement) {
+        if (this.domElement && !this.isMounted) {
             this.children.toReversed().forEach((child) => child.unmountComponent());
             this.componentWillUnmount();
             this.removeListeners();
@@ -96,7 +105,12 @@ export abstract class Block<Props extends BlockOwnProps = {}> {
         }
     }
 
-    private compile() {
+    private compile(): E | null {
+        if (this.props.__children && this.props.__children.length > 0) {
+            // eslint-disable-next-line canonical/id-match
+            this.props.__children = [];
+        }
+
         const html = Handlebars.compile(this.template)(this.props);
 
         const templateElement = document.createElement("template");
@@ -120,7 +134,7 @@ export abstract class Block<Props extends BlockOwnProps = {}> {
             return list;
         }, defaultRefs);
 
-        return templateElement.content.firstElementChild;
+        return templateElement.content.firstElementChild as E;
     }
 
     private mountComponent() {

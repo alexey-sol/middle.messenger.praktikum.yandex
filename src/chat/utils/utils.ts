@@ -21,6 +21,10 @@ export const formatChatItemDate = (dateString: string) => {
 };
 
 export const formatChatMessageDate = (dateString: string) => {
+    if (!dateString) {
+        return "";
+    }
+
     const date = new Date(dateString);
 
     return new Intl.DateTimeFormat(DEFAULT_LOCALE, {
@@ -29,17 +33,18 @@ export const formatChatMessageDate = (dateString: string) => {
     }).format(date);
 };
 
-type EntityWithDate = {
-    date: string;
+type EntityWithTime = {
     id: string;
+    time: string;
 };
 
 // TODO наверняка можно придумать более эффективный алгоритм, чем n^2
-export const isFirstDateOccurrence = (item: EntityWithDate, items: EntityWithDate[]) => {
-    const dateString = new Date(item.date).toDateString();
+export const isLastTimeOccurrence = (item: EntityWithTime, items: EntityWithTime[]) => {
+    const dateString = new Date(item.time).toDateString();
 
     const datesGroupedByDay =
-        items?.filter(({ date }) => new Date(date).toDateString() === dateString) ?? [];
+        items?.toReversed().filter(({ time }) => new Date(time).toDateString() === dateString) ??
+        [];
 
     return datesGroupedByDay[0]?.id === item.id;
 };

@@ -19,6 +19,11 @@
         align-self: flex-end;
     }
 
+    &--system {
+        color: $color-text-light;
+        align-self: flex-end;
+    }
+
     &__attached-images {
         display: flex;
         flex-wrap: wrap;

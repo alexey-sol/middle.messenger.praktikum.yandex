@@ -1,36 +1,42 @@
 import { ChatsController, type ToggleChatUserRequest } from "../api";
-import { type MessengerState } from "../types";
+import chatWindow from "../components/chat-window/chat-window.hbs?raw";
+import sidebar from "../components/sidebar/sidebar.hbs?raw";
 import "@/chat/components/send-message-form/send-message-form";
 import "@/chat/components/toggle-chat-user-modal/add-chat-user-modal";
 import "@/chat/components/toggle-chat-user-modal/delete-chat-user-modal";
-import chatWindow from "../views/components/chat-window/chat-window.hbs?raw";
-import sidebar from "../views/components/sidebar/sidebar.hbs?raw";
-import chatTemplate from "../views/layouts/chat.hbs?raw";
+import { type ChatItem, type ChatMessage, type MessengerState } from "../types";
+import { ChatSocket } from "../utils/chat-socket";
+import { formatChatMessageDate, isLastTimeOccurrence } from "../utils/utils";
+import template from "../views/layouts/chat.hbs?raw";
 import { connect, store } from "@/app/store/store";
 import { type User } from "@/auth/api";
-import { formatChatMessageDate, isFirstDateOccurrence } from "@/chat/utils/utils";
+import { type AuthState } from "@/auth/types";
 import { type SearchUserRequest, UsersController } from "@/profile/api";
-import "../components/create-chat-modal/create-chat-modal";
 import { type MapEventNameToListenerArgs } from "@/shared/components/block";
-import "../views/components/chat-item/chat-item";
+import "../components/chat-item/chat-item";
 import { type FormProps } from "@/shared/components/form";
-import "../views/components/message-item/message-item";
-import loader from "@/shared/components/loader/loader.hbs?raw";
-import { View } from "@/shared/components/view";
-import "../views/layouts/chat.scss";
-import { type DropdownItem, type HasAvatarFile } from "@/shared/types";
-import { getFormValues, getResourceUrl } from "@/shared/utils/helpers";
-import Handlebars from "handlebars";
-import "../components/update-chat-avatar-modal/update-chat-avatar-modal";
+import "../components/chat-window/chat-window.scss";
+import "../components/create-chat-modal/create-chat-modal";
 import "../components/delete-chat-modal/delete-chat-modal";
+import "../components/message-item/message-item";
+import loader from "@/shared/components/loader/loader.hbs?raw";
+import "../components/update-chat-avatar-modal/update-chat-avatar-modal";
+import { View } from "@/shared/components/view";
+import { type DropdownItem, type HasAvatarFile } from "@/shared/types";
+import { getFormValues, getResourceUrl, reverse } from "@/shared/utils/helpers";
+import "../views/layouts/chat.scss";
+import Handlebars from "handlebars";
+
+const LOAD_CHATS_INTERVAL_MS = 5_000;
 
 Handlebars.registerPartial("sidebar", sidebar);
 Handlebars.registerPartial("chat-window", chatWindow);
 Handlebars.registerPartial("loader", loader);
 
 Handlebars.registerHelper("formatChatMessageDate", formatChatMessageDate);
-Handlebars.registerHelper("isFirstDateOccurrence", isFirstDateOccurrence);
+Handlebars.registerHelper("isLastTimeOccurrence", isLastTimeOccurrence);
 Handlebars.registerHelper("getResourceUrl", getResourceUrl);
+Handlebars.registerHelper("reverse", reverse);
 
 type ChatViewProps = Partial<HasAvatarFile> &
     Pick<FormProps, "fields" | "onSubmit" | "validators"> & {
@@ -44,7 +50,10 @@ type ChatViewProps = Partial<HasAvatarFile> &
             updateChatAvatar?: boolean;
         };
         openedChat?: Required<MessengerState>["messenger"]["openedChat"];
+        openedChatMessages: ChatMessage[];
+        openedChatUsers?: Required<MessengerState>["messenger"]["openedChatUsers"];
         settingsDropdownItems: DropdownItem[];
+        user?: User;
     };
 
 class ChatView extends View<ChatViewProps> {
@@ -97,9 +106,29 @@ class ChatView extends View<ChatViewProps> {
 
                 if (target.dataset.chatId) {
                     const chatId = Number(target.dataset.chatId);
+                    const userId = this.props.user?.id;
+                    const isSameChat = chatId === this.getOpenedChatId();
 
+                    if (isSameChat || typeof userId !== "number") {
+                        break;
+                    }
+
+                    if (this.socket) {
+                        this.socket.onClose();
+                    }
+
+                    this.setProps({ openedChatMessages: [] });
                     this.openChat(chatId);
+
                     ChatsController.getChatUsers({ chatId });
+
+                    ChatsController.getChatToken({ chatId }).then(({ token }) =>
+                        this.openSocket({
+                            chatId,
+                            token,
+                            userId,
+                        }),
+                    );
                 }
 
                 break;
@@ -123,10 +152,27 @@ class ChatView extends View<ChatViewProps> {
         },
     };
 
-    protected override template = chatTemplate;
+    protected override template = template;
+
+    private loadChatsIntervalId: null | number = null;
+
+    private socket: ChatSocket | null = null;
 
     constructor(props: ChatViewProps) {
         super(props);
+
+        this.setProps({
+            onSubmit: (event) => {
+                const target = event.target;
+
+                if (!(target instanceof HTMLFormElement)) {
+                    return;
+                }
+
+                const values = getFormValues<{ message: string }>(target, ["message"]);
+                this.socket?.sendMessage(values.message);
+            },
+        });
 
         store.setState("messenger.form.addChatUser.onSubmit", this.handleAddChatUser);
         store.setState("messenger.form.deleteChatUser.onSubmit", this.handleDeleteChatUser);
@@ -140,6 +186,30 @@ class ChatView extends View<ChatViewProps> {
         ChatsController.getChats().catch((error) => {
             console.error("Ошибка при загрузке чатов", error);
         });
+
+        this.loadChatsIntervalId = window.setInterval(() => {
+            const element = document.querySelector(".chat-feed");
+            let lastScrollTop = 0;
+
+            ChatsController.getChats(() => {
+                lastScrollTop = element?.scrollTop ?? 0;
+            })
+                .then(() => {
+                    this.scroll(lastScrollTop);
+                })
+                .catch((error) => {
+                    console.error("Ошибка при загрузке чатов", error);
+                });
+        }, LOAD_CHATS_INTERVAL_MS);
+    }
+
+    componentWillUnmount() {
+        this.socket?.onClose();
+
+        if (this.loadChatsIntervalId !== null) {
+            window.clearInterval(this.loadChatsIntervalId);
+            this.loadChatsIntervalId = null;
+        }
     }
 
     private getOpenedChatId = () => {
@@ -291,12 +361,111 @@ class ChatView extends View<ChatViewProps> {
         const openedChat = this.props.chats?.data?.find((chat) => chat.id === chatId);
         store.setState("messenger.openedChat.data", openedChat);
     };
+
+    private openSocket = ({
+        chatId,
+        token,
+        userId,
+    }: {
+        chatId: number;
+        token: string;
+        userId: number;
+    }) => {
+        this.socket = new ChatSocket(
+            {
+                onMessageHistoryReceived: (messages) => {
+                    const updatedChats = this.updateChatInListById(chatId, {
+                        unreadCount: 0,
+                    });
+
+                    this.setProps({
+                        chats: {
+                            ...this.props.chats,
+                            data: updatedChats,
+                        },
+                        openedChatMessages: [...(this.props.openedChatMessages ?? []), ...messages],
+                    });
+
+                    this.scroll();
+                },
+
+                onMessageReceived: (messages) => {
+                    const currentMessages = this.props.openedChatMessages ?? [];
+                    const newMessages = [messages, ...currentMessages];
+
+                    const updatedChats = this.updateChatInListById(chatId, {
+                        lastMessage: messages.content,
+                    });
+
+                    this.setProps({
+                        chats: {
+                            ...this.props.chats,
+                            data: updatedChats,
+                        },
+                        openedChatMessages: newMessages,
+                    });
+
+                    this.scroll();
+                },
+                onUserConnected: (message) => {
+                    const connectedUserId = Number(message.content);
+
+                    const connectedUser = this.props.openedChatUsers?.data?.find(
+                        (user) => user.id === connectedUserId,
+                    );
+
+                    if (connectedUser) {
+                        const messageContent = `Пользователь ${connectedUser.login} присоединился к чату`;
+                        const normMessage = {
+                            ...message,
+                            content: messageContent,
+                        };
+
+                        const currentMessages = this.props.openedChatMessages ?? [];
+                        const newMessages = [normMessage, ...currentMessages];
+                        this.setProps({ openedChatMessages: newMessages });
+
+                        this.scroll();
+                    }
+                },
+            },
+            {
+                chatId,
+                offset: this.props.openedChatMessages?.length ?? 0,
+                token,
+                userId,
+            },
+        );
+    };
+
+    private scroll = (scrollTop?: number) => {
+        const element = document.querySelector(".chat-feed");
+
+        requestAnimationFrame(() => {
+            if (element) {
+                element.scrollTop = scrollTop ?? element.scrollHeight;
+            }
+        });
+    };
+
+    private updateChatInListById = (chatId: number, patch: Partial<ChatItem>) => {
+        return this.props.chats?.data?.map((item) =>
+            item.id === chatId
+                ? ({
+                      ...item,
+                      ...patch,
+                  } satisfies ChatItem)
+                : item,
+        );
+    };
 }
 
-const mapStateToProps = (state: MessengerState) => {
+const mapStateToProps = (state: AuthState & MessengerState) => {
     return {
         chats: state.messenger?.chats,
         openedChat: state.messenger?.openedChat,
+        openedChatUsers: state.messenger?.openedChatUsers,
+        user: state.auth?.user?.data,
     };
 };
 
