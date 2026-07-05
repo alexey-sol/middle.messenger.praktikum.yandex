@@ -1,0 +1,27 @@
+<div class="message-item message-item--{{#if this.isOutgoing}}outgoing{{else}}incoming{{/if}} message-item--{{#if this.isSystem}}system{{/if}}">
+    {{#if this.content}}
+        <div>
+            {{{safeRender this.content}}}
+        </div>
+    {{/if}}
+
+    {{#if this.images}}
+        <div class="message-item__attached-images">
+            {{#each this.images}}
+                <img width="300" src="{{this.url}}" alt="{{this.title}}">
+            {{/each}}
+        </div>
+    {{/if}}
+
+    <div class="message-item__meta">
+        {{#if this.isRead}}
+            <img src="/assets/icons/checked.svg" alt="Checked">
+        {{/if}}
+
+        {{#if this.time}}
+            <span class="message-item__time {{#if this.isOutgoing}}message-item__time--outgoing{{/if}}">
+                {{formatTime this.time}}
+            </span>
+        {{/if}}
+    </div>
+</div>

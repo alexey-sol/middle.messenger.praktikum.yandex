@@ -20,18 +20,19 @@
     </header>
 
     <div class="chat-feed">
-        {{#each openedChat.data.messages}}
-            {{#if (isFirstDateOccurrence this ../openedChat.data.messages)}}
-                <p class="chat-feed__message-date">{{formatChatMessageDate this.date}}</p>
+        {{#each (reverse openedChatMessages)}}
+            {{#if (isLastTimeOccurrence this ../openedChatMessages)}}
+                <p class="chat-feed__message-date">{{formatChatMessageDate this.time}}</p>
             {{/if}}
 
             {{{
                 MessageItem
-                    date=this.date
-                    images=this.images
-                    isChecked=this.isChecked
-                    isOutgoing=this.isOutgoing
-                    message=this.message
+                    content=this.content
+                    isRead=this.is_read
+                    isOutgoing=(eq this.user_id ../user.id)
+                    isSystem=(eq this.type "user connected")
+                    time=this.time
+                    userId=this.user_id
             }}}
         {{/each}}
     </div>

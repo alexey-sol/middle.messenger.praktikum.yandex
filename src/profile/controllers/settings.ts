@@ -1,14 +1,13 @@
 import { type UpdatePasswordRequest, type UpdateUserRequest, UsersController } from "../api";
-import "@/profile/components/profile-form/profile-form";
 import { type SettingsMode } from "../types";
-import "@/profile/components/update-user-avatar-modal/update-user-avatar-modal";
 import { router } from "@/app/router";
+import { store } from "@/app/store/store";
+import "@/profile/components/profile-form/profile-form";
+import { AuthController, type User } from "@/auth/api";
+import "@/profile/components/update-user-avatar-modal/update-user-avatar-modal";
+import { withUser } from "@/auth/utils";
 import "@/profile/views/layouts/settings.scss";
 import "@/profile/views/layouts/styles.scss";
-import { store } from "@/app/store/store";
-import { AuthController } from "@/auth/api";
-import { type AuthState } from "@/auth/types";
-import { withUser } from "@/auth/utils";
 import profileSidebar from "@/profile/components/profile-sidebar/profile-sidebar.hbs?raw";
 import settingsTemplate from "@/profile/views/layouts/settings.hbs?raw";
 import { type MapEventNameToListenerArgs } from "@/shared/components/block";
@@ -28,7 +27,7 @@ export type SettingsViewProps = Partial<HasAvatarFile> &
             updateUserAvatar?: boolean;
         };
         mode: SettingsMode;
-        user?: Required<AuthState>["auth"]["user"];
+        user?: User;
     };
 
 export class SettingsView extends View<SettingsViewProps> {

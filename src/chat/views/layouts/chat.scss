@@ -1,7 +1,7 @@
 @use "@/styles/constants" as *;
 @use "@/shared/components/dropdown/dropdown.scss" as *;
-@use "../components/sidebar/sidebar.scss" as *;
-@use "../components/chat-window/chat-window.scss" as *;
+@use "@/chat/components/sidebar/sidebar.scss" as *;
+@use "@/chat/components/chat-window/chat-window.scss" as *;
 
 .chat {
     display: flex;

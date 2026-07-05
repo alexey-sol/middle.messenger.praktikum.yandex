@@ -31,6 +31,7 @@
         "@types",
         "src",
         "vite.config.ts",
+        "vitest.config.ts",
         "eslint.config.ts"
     ]
 }

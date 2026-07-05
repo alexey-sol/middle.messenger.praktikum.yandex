@@ -10,7 +10,7 @@ import {
 } from "./chat/constants";
 import { ErrorView } from "./error/controllers/error";
 import SettingsView from "./profile/controllers/settings";
-import { getFormValues, logFormValues } from "./shared/utils/helpers";
+import { getFormValues } from "./shared/utils/helpers";
 import {
     EMPTY_ERROR,
     setOrResetErrorMessage,
@@ -88,11 +88,7 @@ router
     .usePrivate("/messenger", ChatView, {
         attachDropdownItems: ATTACH_DROPDOWN_ITEMS,
         fields: SEND_MESSAGE_FORM_FIELDS,
-        onSubmit: (event) =>
-            logFormValues(
-                event,
-                SEND_MESSAGE_FORM_FIELDS.map(({ name }) => name),
-            ),
+        openedChatMessages: [],
         settingsDropdownItems: SETTINGS_DROPDOWN_ITEMS,
         validators: {
             message: (input: HTMLInputElement) => {

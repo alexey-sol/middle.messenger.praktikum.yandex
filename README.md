@@ -53,3 +53,8 @@
 ### `npm run lint:fix`
 
 Проверка типизации, линтинг CSS и JS.
+
+### `npm run test`
+### `npm run test:watch`
+
+Тесты.

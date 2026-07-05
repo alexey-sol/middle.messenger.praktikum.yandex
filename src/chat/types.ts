@@ -1,10 +1,6 @@
 import { type FormState, type RequestState } from "@/app/store/types";
 import { type User } from "@/auth/api";
-
-export type ActiveChat = {
-    messages: ChatMessage[];
-    title: string;
-};
+import { type HasId } from "@/shared/types";
 
 export type ChatItem = {
     avatar: null | string;
@@ -15,16 +11,13 @@ export type ChatItem = {
     unreadCount: number;
 };
 
-export type ChatMessage = {
-    date: string;
-    id: string;
-    images?: Array<{
-        title?: string;
-        url: string;
-    }>;
-    isChecked?: boolean;
-    isOutgoing?: boolean;
-    message?: string;
+export type ChatMessage = HasId & {
+    chat_id: number;
+    content: string;
+    is_read: boolean;
+    time: string;
+    type: "message";
+    user_id: number;
 };
 
 export type MessengerState = {

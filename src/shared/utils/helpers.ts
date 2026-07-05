@@ -128,14 +128,36 @@ export const cloneDeep = <T extends Indexed>(obj: T) => {
     return obj;
 };
 
-export const isEqual = (lhs: PlainObject, rhs: PlainObject) => {
+export const isEqual = (lhs: PlainObject, rhs: PlainObject): boolean => {
+    if (lhs === rhs) {
+        return true;
+    }
+
+    if (typeof lhs !== "object" || lhs === null || typeof rhs !== "object" || rhs === null) {
+        return false;
+    }
+
     if (Object.keys(lhs).length !== Object.keys(rhs).length) {
         return false;
     }
 
     for (const [key, value] of Object.entries(lhs)) {
         const rightValue = rhs[key];
-        if (isArrayOrObject(value) && isArrayOrObject(rightValue)) {
+
+        if (typeof value === "function" && typeof rightValue === "function") {
+            if (value.toString() !== rightValue.toString()) {
+                return false;
+            }
+
+            continue;
+        }
+
+        if (
+            isArrayOrObject(value) &&
+            isArrayOrObject(rightValue) &&
+            typeof value !== "function" &&
+            typeof rightValue !== "function"
+        ) {
             if (isEqual(value as Indexed, rightValue as Indexed)) {
                 continue;
             }
@@ -152,18 +174,20 @@ export const isEqual = (lhs: PlainObject, rhs: PlainObject) => {
 };
 
 export const merge = (lhs: Indexed, rhs: Indexed): Indexed => {
+    const result: Indexed = { ...lhs };
+
     for (const key of Object.keys(rhs)) {
         const lhsValue = lhs[key];
         const rhsValue = rhs[key];
 
         if (isPlainObject(lhsValue) && isPlainObject(rhsValue)) {
-            merge(lhsValue, rhsValue);
+            result[key] = merge(lhsValue, rhsValue);
         } else {
-            lhs[key] = rhsValue;
+            result[key] = rhsValue;
         }
     }
 
-    return lhs;
+    return result;
 };
 
 export const set = (object: Indexed | unknown, path: string, value: unknown): Indexed | unknown => {
@@ -212,6 +236,8 @@ export const queryStringify = (data: Indexed) => {
 };
 
 export const equals = (a: unknown, b: unknown) => a === b;
+
+export const reverse = (array: unknown[]) => array.toReversed();
 
 export const getFileUrl = (file?: File) => {
     if (!file) {

@@ -13,9 +13,14 @@ class Store {
     }
 
     public setState(path: string, value: unknown) {
-        this.state = merge(this.state, set({}, path, value) as Indexed);
+        const currentStateCopy = cloneDeep(this.state);
+        const newState = merge(currentStateCopy, set({}, path, value) as Indexed);
 
-        this.emit();
+        if (!isEqual(this.state, newState)) {
+            this.state = newState;
+
+            this.emit();
+        }
     }
 
     public subscribe(listener: Listener): () => void {
@@ -41,19 +46,16 @@ export const connect = (mapStateToProps: (state: Indexed) => Indexed) => {
             }
 
             constructor(props: P) {
-                let state = cloneDeep(mapStateToProps(store.getState())) as P;
+                const state = cloneDeep(mapStateToProps(store.getState())) as P;
 
                 super({ ...props, ...state });
 
                 store.subscribe(() => {
                     const newState = cloneDeep(mapStateToProps(store.getState())) as P;
 
-                    // TODO поправить типизацию для isEqual
                     if (!isEqual(state as Indexed, newState as Indexed)) {
                         this.setProps({ ...newState });
                     }
-
-                    state = newState;
                 });
             }
         };
